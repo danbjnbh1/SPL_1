@@ -14,7 +14,7 @@ Simulation::Simulation(const string &configFilePath)
     planCounter = 0;
     actionsLog = vector<BaseAction *>();
     plans = vector<Plan>();
-    settlements = vector<Settlement>();
+    settlements = vector<Settlement*>();
     facilitiesOptions = vector<FacilityType>();
 }
 

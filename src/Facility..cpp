@@ -38,7 +38,7 @@ Facility::Facility(
     timeLeft = price;
 }
 Facility::
-    Facility(FacilityType &type, const string &settlementName) : FacilityType(type), settlementName(settlementName)
+    Facility(const FacilityType &type, const string &settlementName) : FacilityType(type), settlementName(settlementName)
 {
     timeLeft = type.getCost();
 }
