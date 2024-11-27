@@ -60,7 +60,8 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "xstring": "cpp"
     },
     "terminal.integrated.inheritEnv": false,
     "makefile.launchConfigurations": [
@@ -70,4 +71,5 @@
             "binaryArgs": []
         }
     ],
+    "C_Cpp.errorSquiggles": "disabled",
 }

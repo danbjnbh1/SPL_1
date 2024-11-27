@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-
 #include "Simulation.h"
 #include "Action.h"
 #include "Auxiliary.h"
