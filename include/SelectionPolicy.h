@@ -3,6 +3,8 @@
 #include "Facility.h"
 using std::vector;
 
+//להוסיף התייחסות לאם הקלט ריק או שאין כלכלה או משהו ספציםי 
+
 class SelectionPolicy {
     public:
         virtual const FacilityType& selectFacility(const vector<FacilityType>& facilitiesOptions) = 0;

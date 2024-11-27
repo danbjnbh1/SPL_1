@@ -19,7 +19,7 @@ class Plan {
         void setSelectionPolicy(SelectionPolicy *selectionPolicy);
         void step();
         void printStatus();
-        const vector<Facility*> &getFacilities() const;
+        const vector<Facility*> &getFacilities() const; 
         void addFacility(Facility* facility);
         const string toString() const;
 
