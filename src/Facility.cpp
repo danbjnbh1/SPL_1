@@ -25,6 +25,14 @@ FacilityType::FacilityType(
 {
 }
 
+int FacilityType::getCost() const {
+    return price;
+}
+
+const string &FacilityType::getName() const {
+    return name;
+}
+
 Facility::Facility(
     const string &name,
     const string &settlementName,
