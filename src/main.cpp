@@ -10,8 +10,8 @@
 
 using namespace std;
 
-//Simulation* backup = nullptr;
-/*
+// Simulation* backup = nullptr;
+
 void facilityTest(){
     Facility *fac1 = new Facility("Fac1", "Set1", FacilityCategory::ENVIRONMENT, 2,2,2,2);
     string s = fac1->toString();
