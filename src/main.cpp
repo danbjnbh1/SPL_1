@@ -17,6 +17,7 @@ void facilityTest(){
     string s = fac1->toString();
     cout << s << endl;
 }
+*/
 
 int main(int argc, char** argv){
     /*
@@ -31,10 +32,11 @@ int main(int argc, char** argv){
     delete backup;
        backup = nullptr;
     }
-    */
+    
     facilityTest();
     cout << "Test print" << endl;
     Settlement *s = new Settlement("dadush", SettlementType::METROPOLIS);
     cout << s->toString() << endl;
+    */
     return 0;
 }
