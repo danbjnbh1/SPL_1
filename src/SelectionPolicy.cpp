@@ -57,7 +57,7 @@ const FacilityType &BalancedSelection::selectFacility(const vector<FacilityType>
         }
     }
 
-    const FacilityType& choosenFacility = facilitiesOptions[resultInx];
+    const FacilityType &choosenFacility = facilitiesOptions[resultInx];
 
     EnvironmentScore = EnvironmentScore + choosenFacility.getEconomyScore();
     EconomyScore = EconomyScore + choosenFacility.getEconomyScore();
