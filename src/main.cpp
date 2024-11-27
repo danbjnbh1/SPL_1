@@ -1,11 +1,14 @@
-#include "Simulation.h"
+//#include "Simulation.h"
 #include <iostream>
+#include <Facility.h>
+#include <Settlement.h>
 
 using namespace std;
 
 //Simulation* backup = nullptr;
 
 int main(int argc, char** argv){
+    /*
     if(argc!=2){
         cout << "usage: simulation <config_path>" << endl;
         return 0;
@@ -17,5 +20,9 @@ int main(int argc, char** argv){
     delete backup;
        backup = nullptr;
     }
+    */
+    cout << "Test print" << endl;
+    Settlement *s = new Settlement("dadush", SettlementType::METROPOLIS);
+    cout << s->toString() << endl;
     return 0;
 }
