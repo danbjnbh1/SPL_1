@@ -17,7 +17,7 @@ void facilityTest(){
     string s = fac1->toString();
     cout << s << endl;
 }
-*/
+
 
 int main(int argc, char** argv){
     /*
