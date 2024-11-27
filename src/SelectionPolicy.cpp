@@ -3,13 +3,12 @@
 #include "Facility.h"
 #include <map>
 #include "SelectionPolicy.h"
+#include "SelectionPolicy.h"
+#include <algorithm>
+#include <climits>
+
 using std::vector;
 using namespace std;
-
-
-map<FacilityCategory, string> categoryToString = {{FacilityCategory::ECONOMY, "ECONOMY"},
-                                                  {FacilityCategory::ENVIRONMENT, "ENVIRONMENT"},
-                                                  {FacilityCategory::LIFE_QUALITY, "LIFE_QUALITY"}};
 
 const FacilityType& EconomySelection :: selectFacility(const vector<FacilityType>& facilitiesOptions) 
     {   
@@ -17,7 +16,7 @@ const FacilityType& EconomySelection :: selectFacility(const vector<FacilityType
 
         for(int i = lastSelectedIndex; i < size; (i++)%size)
         {
-            if (categoryToString[facilitiesOptions[i].getCategory()] == "ECONOMY")
+            if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
             {
                 return facilitiesOptions[i];
             }
@@ -41,7 +40,7 @@ const FacilityType& SustainabilitySelection :: selectFacility(const vector<Facil
 
         for(int i = lastSelectedIndex; i < size; (i++)%size)
         {
-            if (categoryToString[facilitiesOptions[i].getCategory()] == "ENVIRONMENT")
+            if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
             {
                 return facilitiesOptions[i];
             }
@@ -51,17 +50,12 @@ const FacilityType& SustainabilitySelection :: selectFacility(const vector<Facil
 const string SustainabilitySelection :: toString() const 
     {
         return "The SustainabilitySelection was selected and the last index is: " + lastSelectedIndex;
-        
     }
 
 SustainabilitySelection *SustainabilitySelection :: clone() const 
 {
     return new SustainabilitySelection(*this);
 }
-#include "SelectionPolicy.h"
-#include <algorithm>
-
-using namespace std;
 
 NaiveSelection::NaiveSelection()
 {

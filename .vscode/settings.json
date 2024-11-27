@@ -59,17 +59,7 @@
         "typeinfo": "cpp",
         "unordered_map": "cpp",
         "variant": "cpp",
-        "algorithm": "cpp",
-        "map": "cpp",
-        "xstring": "cpp"
+        "algorithm": "cpp"
     },
     "terminal.integrated.inheritEnv": false,
-    "makefile.launchConfigurations": [
-        {
-            "cwd": "/Users/dannachmany/workspace/Private/Study/SPL/Ass1/Skeleton/bin",
-            "binaryPath": "/Users/dannachmany/workspace/Private/Study/SPL/Ass1/Skeleton/bin/main",
-            "binaryArgs": []
-        }
-    ],
-    "C_Cpp.errorSquiggles": "disabled",
 }
