@@ -44,7 +44,7 @@ void Simulation::initSimulation(const string &configFilePath)
         else if (lineArgs[0] == "plan")
         {
             Settlement &settlement = getSettlement(lineArgs[1]);
-            SelectionPolicy* selectionPolicy = createPolicyByName(lineArgs[1]);
+            SelectionPolicy *selectionPolicy = createPolicyByName(lineArgs[1]);
 
             plans.push_back(Plan(planCounter++, settlement, selectionPolicy, facilitiesOptions));
         }
@@ -89,12 +89,7 @@ void Simulation::start()
         }
 
         action->act(*this);
-        //! check if need to add to log failed action also
-        if (action->getStatus() == ActionStatus::COMPLETED)
-        {
-            this->addAction(action); //! clone ???
-        }
-        else
+        if (action->getStatus() != ActionStatus::ERROR)
         {
             cout << action->toString() << endl;
         }
@@ -169,7 +164,6 @@ Settlement &Simulation::getSettlement(const string &settlementName)
 
 Plan &Simulation::getPlan(const int planID)
 {
-
     for (Plan plan : plans)
     {
         if (plan.getID() == planID)
