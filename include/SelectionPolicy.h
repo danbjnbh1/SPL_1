@@ -29,6 +29,7 @@ private:
 class BalancedSelection : public SelectionPolicy
 {
 public:
+    BalancedSelection();
     BalancedSelection(int LifeQualityScore, int EconomyScore, int EnvironmentScore);
     const FacilityType &selectFacility(const vector<FacilityType> &facilitiesOptions) override;
     const string toString() const override;
@@ -66,3 +67,5 @@ public:
 private:
     int lastSelectedIndex;
 };
+
+SelectionPolicy *createPolicyByName(string policyName);

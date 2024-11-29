@@ -86,6 +86,8 @@ NaiveSelection *NaiveSelection::clone() const
     return clonedObject;
 }
 
+BalancedSelection::BalancedSelection() : LifeQualityScore(0), EconomyScore(0), EnvironmentScore(0) {}
+
 BalancedSelection::BalancedSelection(
     int LifeQualityScore,
     int EconomyScore,
@@ -140,4 +142,26 @@ BalancedSelection *BalancedSelection::clone() const
     return new BalancedSelection(LifeQualityScore,
                                  EconomyScore,
                                  EnvironmentScore);
+}
+
+SelectionPolicy *createPolicyByName(string policyName)
+{
+    if (policyName == "nve")
+    {
+        return new NaiveSelection();
+    }
+    if (policyName == "bal")
+    {
+        return new BalancedSelection();
+    }
+    if (policyName == "eco")
+    {
+        return new EconomySelection();
+    }
+    if (policyName == "env")
+    {
+        return new SustainabilitySelection();
+    }
+
+    return nullptr;
 }

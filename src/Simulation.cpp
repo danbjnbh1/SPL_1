@@ -15,6 +15,40 @@ Simulation::Simulation(const string &configFilePath)
     plans = vector<Plan>();
     settlements = vector<Settlement *>();
     facilitiesOptions = vector<FacilityType>();
+    initSimulation(configFilePath);
+}
+
+void Simulation::initSimulation(const string &configFilePath)
+{
+    ifstream file(configFilePath);
+    string line;
+
+    while (getline(file, line))
+    {
+        if (line.empty() || line[0] == '#')
+        {
+            continue;
+        }
+
+        vector<string> lineArgs = Auxiliary::parseArguments(line);
+        if (lineArgs[0] == "settlement")
+        {
+            Settlement *sett = new Settlement(lineArgs[1], static_cast<SettlementType>(stoi(lineArgs[2])));
+            settlements.push_back(sett);
+        }
+        else if (lineArgs[0] == "facility")
+        {
+            FacilityType fac(lineArgs[1], static_cast<FacilityCategory>(stoi(lineArgs[2])), stoi(lineArgs[3]), stoi(lineArgs[4]), stoi(lineArgs[5]), stoi(lineArgs[6]));
+            facilitiesOptions.push_back(fac);
+        }
+        else if (lineArgs[0] == "plan")
+        {
+            Settlement &settlement = getSettlement(lineArgs[1]);
+            SelectionPolicy* selectionPolicy = createPolicyByName(lineArgs[1]);
+
+            plans.push_back(Plan(planCounter++, settlement, selectionPolicy, facilitiesOptions));
+        }
+    }
 }
 
 void Simulation::start()
@@ -31,12 +65,19 @@ void Simulation::start()
         switch (actionType)
         {
         case ActionType::STEP:
-            int numOfSteps = stoi(parsedAction[1]);
-            action = new SimulateStep(numOfSteps);
+            action = new SimulateStep(stoi(parsedAction[1]));
+            break;
+
+        case ActionType::PLAN:
+            action = new AddPlan(parsedAction[1], parsedAction[2]);
             break;
 
         case ActionType::FACILITY:
             action = new AddFacility(parsedAction[1], static_cast<FacilityCategory>(stoi(parsedAction[2])), stoi(parsedAction[3]), stoi(parsedAction[4]), stoi(parsedAction[5]), stoi(parsedAction[6]));
+            break;
+
+        case ActionType::SETTLEMENT:
+            action = new AddSettlement(parsedAction[1], static_cast<SettlementType>(stoi(parsedAction[2])));
             break;
 
         case ActionType::CLOSE:
@@ -51,7 +92,7 @@ void Simulation::start()
         //! check if need to add to log failed action also
         if (action->getStatus() == ActionStatus::COMPLETED)
         {
-            this->addAction(action->clone()); //! clone ???
+            this->addAction(action); //! clone ???
         }
         else
         {
@@ -68,7 +109,6 @@ void Simulation::addPlan(const Settlement &settlement, SelectionPolicy *selectio
 
 void Simulation::addAction(BaseAction *action)
 {
-    //! should trigger action?
     actionsLog.push_back(action->clone());
 }
 
@@ -149,18 +189,13 @@ void Simulation::step()
     }
 }
 
-void Simulation::start()
-{
-    open();
-}
-
 void Simulation::open()
 {
     isRunning = true;
+    cout << "The simulation has started";
 }
 
 void Simulation::close()
 {
     isRunning = false;
-    cout << "The simulation has started";
 }

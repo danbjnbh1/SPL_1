@@ -26,6 +26,7 @@ public:
     void step();
     void close();
     void open();
+    void initSimulation(const string &configFilePath);
 
 private:
     bool isRunning;

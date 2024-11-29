@@ -50,6 +50,10 @@ void SimulateStep::act(Simulation &simulation)
     simulation.step();
 }
 
+AddFacility::AddFacility(const string &facilityName, const FacilityCategory facilityCategory, const int price, const int lifeQualityScore, const int economyScore, const int environmentScore) : facilityName(facilityName), facilityCategory(facilityCategory), price(price), lifeQualityScore(lifeQualityScore), economyScore(economyScore), environmentScore(environmentScore)
+{
+}
+
 void AddFacility::act(Simulation &simulation)
 {
     FacilityType newFacility(facilityName, facilityCategory, price, lifeQualityScore, economyScore, environmentScore);
@@ -62,4 +66,26 @@ void AddFacility::act(Simulation &simulation)
     {
         complete();
     }
+}
+
+AddPlan::AddPlan(const string &settlementName, const string &selectionPolicy) : settlementName(settlementName), selectionPolicy(selectionPolicy) {}
+
+void AddPlan::act(Simulation &simulation)
+{
+    if (!simulation.isSettlementExists(settlementName))
+    {
+        error("Cannot create this plan");
+        return;
+    }
+
+    Settlement &settlement = simulation.getSettlement(settlementName);
+    SelectionPolicy *selectionPolicy = createPolicyByName(this->selectionPolicy);
+
+    if (selectionPolicy == nullptr)
+    {
+        error("Cannot create this plan");
+        return;
+    }
+    simulation.addPlan(settlement, selectionPolicy);
+    complete();
 }
