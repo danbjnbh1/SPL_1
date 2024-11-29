@@ -156,10 +156,8 @@ bool Simulation::isFacilityExists(const string &facilityName)
     return true;
 }
 
-//! check about if sett doesn't exist
 Settlement &Simulation::getSettlement(const string &settlementName)
 {
-
     for (Settlement *sett : settlements)
     {
         if (sett->getName() == settlementName)
