@@ -9,6 +9,22 @@ enum class ActionStatus{
     COMPLETED, ERROR
 };
 
+enum class ActionType{
+    STEP,
+    PLAN,
+    PLAN_STATUS,
+    CHANGE_POLICY,
+    SETTLEMENT,
+    FACILITY,
+    BACKUP,
+    RESTORE,
+    CLOSE,
+    LOG
+};
+
+ActionType getActionType(string &actionTypeStr);
+
+//! Dan
 class BaseAction{
     public:
         BaseAction();

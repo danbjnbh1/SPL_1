@@ -23,6 +23,8 @@ class Plan {
         void addFacility(Facility* facility);
         const string toString() const;
 
+        const int getID() const; //! check if ok th add it
+
     private:
         int plan_id;
         const Settlement &settlement;

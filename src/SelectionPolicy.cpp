@@ -10,56 +10,62 @@
 using std::vector;
 using namespace std;
 
-const FacilityType& EconomySelection :: selectFacility(const vector<FacilityType>& facilitiesOptions) 
-    {   
-        int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
+EconomySelection::EconomySelection() : lastSelectedIndex(0)
+{
+}
 
-        for(int i = lastSelectedIndex; i < size; (i++)%size)
+const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType> &facilitiesOptions)
+{
+    int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
+
+    for (int i = lastSelectedIndex; i < size; (i++) % size)
+    {
+        if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
-            if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
-            {
-                return facilitiesOptions[i];
-            }
+            return facilitiesOptions[i];
         }
     }
+}
 
-const string EconomySelection :: toString() const 
-    {
-        return "The EconomySelection was selected and the last index is: " + lastSelectedIndex;
-    }
+const string EconomySelection ::toString() const
+{
+    return "The EconomySelection was selected and the last index is: " + lastSelectedIndex;
+}
 
-EconomySelection *EconomySelection :: clone() const 
+EconomySelection *EconomySelection ::clone() const
 {
     return new EconomySelection(*this);
 }
 
+SustainabilitySelection::SustainabilitySelection() : lastSelectedIndex(0)
+{
+}
 
-const FacilityType& SustainabilitySelection :: selectFacility(const vector<FacilityType>& facilitiesOptions) 
-    {   
-        int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
+const FacilityType &SustainabilitySelection ::selectFacility(const vector<FacilityType> &facilitiesOptions)
+{
+    int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
 
-        for(int i = lastSelectedIndex; i < size; (i++)%size)
+    for (int i = lastSelectedIndex; i < size; (i++) % size)
+    {
+        if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
-            if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
-            {
-                return facilitiesOptions[i];
-            }
+            return facilitiesOptions[i];
         }
     }
+}
 
-const string SustainabilitySelection :: toString() const 
-    {
-        return "The SustainabilitySelection was selected and the last index is: " + lastSelectedIndex;
-    }
+const string SustainabilitySelection ::toString() const
+{
+    return "The SustainabilitySelection was selected and the last index is: " + lastSelectedIndex;
+}
 
-SustainabilitySelection *SustainabilitySelection :: clone() const 
+SustainabilitySelection *SustainabilitySelection ::clone() const
 {
     return new SustainabilitySelection(*this);
 }
 
-NaiveSelection::NaiveSelection()
+NaiveSelection::NaiveSelection() : lastSelectedIndex(0)
 {
-    lastSelectedIndex = 0;
 }
 
 const FacilityType &NaiveSelection::selectFacility(const vector<FacilityType> &facilitiesOptions)
