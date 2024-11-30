@@ -1,6 +1,8 @@
 #include "Action.h"
 #include <map>
 
+extern Simulation* backup;
+
 using namespace std;
 
 ActionType getActionType(string &actionTypeStr)
@@ -22,6 +24,7 @@ ActionType getActionType(string &actionTypeStr)
     return stringToEnum[actionTypeStr];
 }
 
+// BaseAction start --------------------------------------
 ActionStatus BaseAction::getStatus() const
 {
     return status;
@@ -42,14 +45,18 @@ const string &BaseAction::getErrorMsg() const
 {
     return errorMsg;
 }
+// BaseAction end ----------------------------------------
 
+// SimulateStep start --------------------------------------
 SimulateStep::SimulateStep(const int numOfSteps) : numOfSteps(numOfSteps) {}
 
 void SimulateStep::act(Simulation &simulation)
 {
     simulation.step();
 }
+// SimulateStep end ----------------------------------------
 
+// AddFacility start --------------------------------------
 AddFacility::AddFacility(const string &facilityName, const FacilityCategory facilityCategory, const int price, const int lifeQualityScore, const int economyScore, const int environmentScore) : facilityName(facilityName), facilityCategory(facilityCategory), price(price), lifeQualityScore(lifeQualityScore), economyScore(economyScore), environmentScore(environmentScore)
 {
 }
@@ -67,7 +74,9 @@ void AddFacility::act(Simulation &simulation)
         complete();
     }
 }
+// AddFacility end ----------------------------------------
 
+// AddPlan start --------------------------------------
 AddPlan::AddPlan(const string &settlementName, const string &selectionPolicy) : settlementName(settlementName), selectionPolicy(selectionPolicy) {}
 
 void AddPlan::act(Simulation &simulation)
@@ -89,3 +98,10 @@ void AddPlan::act(Simulation &simulation)
     simulation.addPlan(settlement, selectionPolicy);
     complete();
 }
+// AddPlan end ----------------------------------------
+
+// BackupSimulation start --------------------------------------
+void BackupSimulation::act(Simulation& simulation){
+    backup = new Simulation(simulation);
+}
+// BackupSimulation end ----------------------------------------

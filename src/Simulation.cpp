@@ -18,6 +18,30 @@ Simulation::Simulation(const string &configFilePath)
     initSimulation(configFilePath);
 }
 
+Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning), planCounter(other.planCounter)
+{
+    vector<BaseAction *> actionsLog;
+    for (BaseAction *action : other.actionsLog)
+    {
+        actionsLog.push_back(action->clone());
+    }
+
+    vector<Plan> plans;
+    for (Plan plan: other.plans){
+        plans.push_back(plan);
+    }
+
+    vector<Settlement *> settlements;
+    for (Settlement* sett: other.settlements){
+        settlements.push_back(new Settlement(*sett));
+    }
+
+    vector<FacilityType> facilitiesOptions;
+    for (FacilityType facility: other.facilitiesOptions){
+        facilitiesOptions.push_back(facility);
+    }
+}
+
 void Simulation::initSimulation(const string &configFilePath)
 {
     ifstream file(configFilePath);
@@ -78,6 +102,10 @@ void Simulation::start()
 
         case ActionType::SETTLEMENT:
             action = new AddSettlement(parsedAction[1], static_cast<SettlementType>(stoi(parsedAction[2])));
+            break;
+
+        case ActionType::BACKUP:
+            action = new BackupSimulation();
             break;
 
         case ActionType::CLOSE:
