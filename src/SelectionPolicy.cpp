@@ -75,7 +75,7 @@ const FacilityType &NaiveSelection::selectFacility(const vector<FacilityType> &f
 
 const string NaiveSelection::toString() const
 {
-    return "Naive Selection: " + to_string(lastSelectedIndex);
+    return "Naive Selection: last selected index is " + to_string(lastSelectedIndex);
 }
 
 NaiveSelection *NaiveSelection::clone() const
