@@ -10,7 +10,7 @@
 using std::vector;
 using namespace std;
 
-EconomySelection::EconomySelection() : lastSelectedIndex(0)
+EconomySelection::EconomySelection() : lastSelectedIndex(-1)
 {
 }
 
@@ -18,7 +18,7 @@ const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType>
 {
     int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
 
-    for (int i = lastSelectedIndex; i < size; (i++) % size)
+    for (int i = lastSelectedIndex; i < size; (++i) % size)
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
@@ -37,7 +37,7 @@ EconomySelection *EconomySelection ::clone() const
     return new EconomySelection(*this);
 }
 
-SustainabilitySelection::SustainabilitySelection() : lastSelectedIndex(0)
+SustainabilitySelection::SustainabilitySelection() : lastSelectedIndex(-1)
 {
 }
 
@@ -45,7 +45,7 @@ const FacilityType &SustainabilitySelection ::selectFacility(const vector<Facili
 {
     int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
 
-    for (int i = lastSelectedIndex; i < size; (i++) % size)
+    for (int i = lastSelectedIndex; i < size; (++i) % size)
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
@@ -64,14 +64,13 @@ SustainabilitySelection *SustainabilitySelection ::clone() const
     return new SustainabilitySelection(*this);
 }
 
-NaiveSelection::NaiveSelection() : lastSelectedIndex(0)
+NaiveSelection::NaiveSelection() : lastSelectedIndex(-1)
 {
 }
 
 const FacilityType &NaiveSelection::selectFacility(const vector<FacilityType> &facilitiesOptions)
 {
-    lastSelectedIndex = (lastSelectedIndex + 1) % facilitiesOptions.size();
-    return facilitiesOptions[lastSelectedIndex];
+    return facilitiesOptions[++lastSelectedIndex % facilitiesOptions.size()];
 }
 
 const string NaiveSelection::toString() const
