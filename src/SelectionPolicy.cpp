@@ -10,67 +10,73 @@
 using std::vector;
 using namespace std;
 
-const FacilityType& EconomySelection :: selectFacility(const vector<FacilityType>& facilitiesOptions) 
-    {   
-        int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
+EconomySelection::EconomySelection() : lastSelectedIndex(-1)
+{
+}
 
-        for(int i = lastSelectedIndex; i < size; (i++)%size)
+const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType> &facilitiesOptions)
+{
+    int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]); //! TODO:OR - check about this method sizeof? why not .size()?
+
+    for (int i = lastSelectedIndex; i < size; (++i) % size) //! TODO:OR - (++i) % size doest not updated the i with the new modulo it's i++ and calculate modulo without saving it on i
+    {
+        if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
-            if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
-            {
-                return facilitiesOptions[i];
-            }
+            return facilitiesOptions[i];
         }
     }
+}
 
-const string EconomySelection :: toString() const 
-    {
-        return "The EconomySelection was selected and the last index is: " + lastSelectedIndex;
-    }
+const string EconomySelection ::toString() const
+{
+    return "The EconomySelection was selected and the last index is: " + lastSelectedIndex; //! TODO:OR - use to_string before concat int to string
+}
 
-EconomySelection *EconomySelection :: clone() const 
+EconomySelection *EconomySelection ::clone() const
 {
     return new EconomySelection(*this);
 }
 
+SustainabilitySelection::SustainabilitySelection() : lastSelectedIndex(-1)
+{
+}
 
-const FacilityType& SustainabilitySelection :: selectFacility(const vector<FacilityType>& facilitiesOptions) 
-    {   
-        int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]);
+const FacilityType &SustainabilitySelection ::selectFacility(const vector<FacilityType> &facilitiesOptions)
+{
+    int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]); //! TODO:OR - check about this method sizeof?? why not .size()?
 
-        for(int i = lastSelectedIndex; i < size; (i++)%size)
+    for (int i = lastSelectedIndex; i < size; (++i) % size) //! TODO:OR - (++i) % size doest not updated the i with the new modulo it's i++ and calculate modulo without saving it on i
+    {
+        if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
-            if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
-            {
-                return facilitiesOptions[i];
-            }
+            return facilitiesOptions[i];
         }
     }
+}
 
-const string SustainabilitySelection :: toString() const 
-    {
-        return "The SustainabilitySelection was selected and the last index is: " + lastSelectedIndex;
-    }
+const string SustainabilitySelection ::toString() const
+{
+    return "The SustainabilitySelection was selected and the last index is: " + lastSelectedIndex; //! TODO:OR - use to_string before concat int to string
+}
 
-SustainabilitySelection *SustainabilitySelection :: clone() const 
+SustainabilitySelection *SustainabilitySelection ::clone() const
 {
     return new SustainabilitySelection(*this);
 }
 
-NaiveSelection::NaiveSelection()
+NaiveSelection::NaiveSelection() : lastSelectedIndex(-1)
 {
-    lastSelectedIndex = 0;
 }
 
 const FacilityType &NaiveSelection::selectFacility(const vector<FacilityType> &facilitiesOptions)
 {
-    lastSelectedIndex = (lastSelectedIndex + 1) % facilitiesOptions.size();
+    lastSelectedIndex = lastSelectedIndex % facilitiesOptions.size();
     return facilitiesOptions[lastSelectedIndex];
 }
 
 const string NaiveSelection::toString() const
 {
-    return "Naive Selection: " + to_string(lastSelectedIndex);
+    return "Naive Selection: last selected index is " + to_string(lastSelectedIndex);
 }
 
 NaiveSelection *NaiveSelection::clone() const
@@ -79,6 +85,8 @@ NaiveSelection *NaiveSelection::clone() const
     clonedObject->lastSelectedIndex = this->lastSelectedIndex;
     return clonedObject;
 }
+
+BalancedSelection::BalancedSelection() : LifeQualityScore(0), EconomyScore(0), EnvironmentScore(0) {}
 
 BalancedSelection::BalancedSelection(
     int LifeQualityScore,
@@ -134,4 +142,26 @@ BalancedSelection *BalancedSelection::clone() const
     return new BalancedSelection(LifeQualityScore,
                                  EconomyScore,
                                  EnvironmentScore);
+}
+
+SelectionPolicy *createPolicyByName(string policyName)
+{
+    if (policyName == "nve")
+    {
+        return new NaiveSelection();
+    }
+    if (policyName == "bal")
+    {
+        return new BalancedSelection();
+    }
+    if (policyName == "eco")
+    {
+        return new EconomySelection();
+    }
+    if (policyName == "env")
+    {
+        return new SustainabilitySelection();
+    }
+
+    return nullptr;
 }

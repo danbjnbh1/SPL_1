@@ -11,7 +11,6 @@ compile: src/main.cpp src/Auxiliary.cpp src/Facility.cpp src/Settlement.cpp src/
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Auxiliary.o src/Auxiliary.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Settlement.o src/Settlement.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/SelectionPolicy.o src/SelectionPolicy.cpp
-	
 
 clean: 
 	@echo "Cleaning bin"
