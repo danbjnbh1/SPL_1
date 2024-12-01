@@ -16,9 +16,9 @@ EconomySelection::EconomySelection() : lastSelectedIndex(-1)
 
 const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType> &facilitiesOptions)
 {
-    int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]); //! TODO:OR - check about this method sizeof? why not .size()?
+    int size = facilitiesOptions.size() / sizeof(facilitiesOptions[0]);
 
-    for (int i = lastSelectedIndex; i < size; (++i) % size) //! TODO:OR - (++i) % size doest not updated the i with the new modulo it's i++ and calculate modulo without saving it on i
+    for (int i = lastSelectedIndex; i < size; i = (i + 1) % size) 
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
@@ -29,7 +29,7 @@ const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType>
 
 const string EconomySelection ::toString() const
 {
-    return "The EconomySelection was selected and the last index is: " + lastSelectedIndex; //! TODO:OR - use to_string before concat int to string
+    return "The EconomySelection was selected and the last index is: " + std::to_string(lastSelectedIndex);
 }
 
 EconomySelection *EconomySelection ::clone() const
@@ -43,9 +43,9 @@ SustainabilitySelection::SustainabilitySelection() : lastSelectedIndex(-1)
 
 const FacilityType &SustainabilitySelection ::selectFacility(const vector<FacilityType> &facilitiesOptions)
 {
-    int size = sizeof(facilitiesOptions) / sizeof(facilitiesOptions[0]); //! TODO:OR - check about this method sizeof?? why not .size()?
+    int size = facilitiesOptions.size() / sizeof(facilitiesOptions[0]); 
 
-    for (int i = lastSelectedIndex; i < size; (++i) % size) //! TODO:OR - (++i) % size doest not updated the i with the new modulo it's i++ and calculate modulo without saving it on i
+    for (int i = lastSelectedIndex; i < size; i = (i + 1) % size)
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
@@ -55,8 +55,8 @@ const FacilityType &SustainabilitySelection ::selectFacility(const vector<Facili
 }
 
 const string SustainabilitySelection ::toString() const
-{
-    return "The SustainabilitySelection was selected and the last index is: " + lastSelectedIndex; //! TODO:OR - use to_string before concat int to string
+{   
+    return "The SustainabilitySelection was selected and the last index is: " + std::to_string(lastSelectedIndex);
 }
 
 SustainabilitySelection *SustainabilitySelection ::clone() const
