@@ -11,19 +11,19 @@ map<FacilityStatus, string> statusToString = {{FacilityStatus::OPERATIONAL, "OPE
                                               {FacilityStatus::UNDER_CONSTRUCTIONS, "Environment"}};
 
 FacilityType::FacilityType(
-    const string &name,
+    const string name,
     const FacilityCategory category,
     const int price,
     const int lifeQuality_score,
     const int economy_score,
-    const int environment_score) : name(name),
+    const int environment_score): name(name),
                                    category(category),
                                    price(price),
                                    lifeQuality_score(lifeQuality_score),
                                    economy_score(economy_score),
                                    environment_score(environment_score)
-{
-}
+    {
+    }
 
 int FacilityType::getCost() const
 {
