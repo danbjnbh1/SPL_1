@@ -39,6 +39,26 @@ Plan::Plan(
                                                    selectionPolicy(selectionPolicy),
                                                    facilityOptions(facilityOptions) {};
 
+Plan::Plan(const Plan &other)
+    : plan_id(other.plan_id),
+      settlement(other.settlement),
+      selectionPolicy(other.selectionPolicy->clone()),
+      status(other.status),
+      life_quality_score(other.life_quality_score),
+      economy_score(other.economy_score),
+      environment_score(other.environment_score),
+      facilityOptions(other.facilityOptions)
+{
+    for (Facility *facility : other.facilities) {
+        facilities.push_back(new Facility(*facility));  
+    }
+
+    for (Facility *facility : other.underConstruction) {
+        underConstruction.push_back(new Facility(*facility));  
+    }
+}
+
+
 const int Plan::getlifeQualityScore() const
 {
     return life_quality_score;
@@ -110,6 +130,7 @@ const std::string Plan::printFacilities() const
     }
     return result;
 }
+
 const std::string Plan::printunfinishedFacilities() const
 {
     std::string result;
@@ -133,7 +154,8 @@ void Plan::setSelectionPolicy(SelectionPolicy *selectionPolicy)
     this->selectionPolicy = selectionPolicy;
 }
 
-const SelectionPolicy& Plan::getSelectionPolicy() const {
+const SelectionPolicy &Plan::getSelectionPolicy() const
+{
     return *selectionPolicy;
 }
 

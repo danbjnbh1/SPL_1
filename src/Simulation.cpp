@@ -18,7 +18,10 @@ Simulation::Simulation(const string &configFilePath)
     initSimulation(configFilePath);
 }
 
-Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning), planCounter(other.planCounter)
+Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
+                                                  planCounter(other.planCounter),
+                                                  plans(other.plans),
+                                                  facilitiesOptions(other.facilitiesOptions)
 {
     vector<BaseAction *> actionsLog;
     for (BaseAction *action : other.actionsLog)
@@ -26,22 +29,10 @@ Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning), pl
         actionsLog.push_back(action->clone());
     }
 
-    vector<Plan> plans;
-    for (Plan plan : other.plans)
-    {
-        plans.push_back(plan);
-    }
-
-    vector<Settlement *> settlements;
+    vector<Settlement *> settlements(other.settlements);
     for (Settlement *sett : other.settlements)
     {
         settlements.push_back(new Settlement(*sett));
-    }
-
-    vector<FacilityType> facilitiesOptions;
-    for (FacilityType facility : other.facilitiesOptions)
-    {
-        facilitiesOptions.push_back(facility);
     }
 }
 
@@ -84,7 +75,7 @@ void Simulation::start()
     while (isRunning)
     {
         string userInput;
-        cin >> userInput;
+        getline(cin, userInput);
         vector<string> parsedAction = Auxiliary::parseArguments(userInput);
         ActionType actionType = getActionType(parsedAction[0]);
         BaseAction *action;
@@ -137,10 +128,6 @@ void Simulation::start()
 
         action->act(*this);
         addAction(action);
-        // if (action->getStatus() != ActionStatus::ERROR)
-        // {
-        //     cout << action->getErrorMsg() << endl;
-        // }
     }
 }
 

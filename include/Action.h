@@ -154,7 +154,6 @@ class BackupSimulation : public BaseAction {
     private:
 };
 
-
 //!Dan
 class RestoreSimulation : public BaseAction {
     public:
