@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 #include "Simulation.h"
 enum class SettlementType;
 enum class FacilityCategory;
@@ -23,6 +24,8 @@ enum class ActionType{
 };
 
 ActionType getActionType(string &actionTypeStr);
+
+const map<ActionStatus, string> actionStatusToString;
 
 //! Dan
 class BaseAction{
