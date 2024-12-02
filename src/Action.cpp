@@ -105,3 +105,7 @@ void BackupSimulation::act(Simulation& simulation){
     backup = new Simulation(simulation);
 }
 // BackupSimulation end ----------------------------------------
+
+
+AddSettlement::AddSettlement(const string &settlementName, SettlementType settlementType):
+                            settlementName(settlementName), settlementType(settlementType){};

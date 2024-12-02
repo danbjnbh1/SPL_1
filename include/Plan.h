@@ -28,6 +28,11 @@ public:
 
     const int getID() const; //! check if ok th add it
 
+
+    const std::string printFacilities() const;
+    const std::string printunfinishedFacilities() const;
+
+
 private:
     int plan_id;
     const Settlement &settlement;
