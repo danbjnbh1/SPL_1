@@ -1,7 +1,8 @@
 #include "Action.h"
+#include "Facility.h"
 #include <map>
 
-extern Simulation* backup;
+extern Simulation *backup;
 
 using namespace std;
 
@@ -23,6 +24,8 @@ ActionType getActionType(string &actionTypeStr)
 
     return stringToEnum[actionTypeStr];
 }
+
+const map<ActionStatus, string> actionStatusToString = {{ActionStatus::COMPLETED, "COMPLETED"}, {ActionStatus::ERROR, "ERROR"}};
 
 // BaseAction start --------------------------------------
 ActionStatus BaseAction::getStatus() const
@@ -54,6 +57,16 @@ void SimulateStep::act(Simulation &simulation)
 {
     simulation.step();
 }
+
+const string SimulateStep::toString() const
+{
+    return "step" + to_string(numOfSteps) + actionStatusToString[getStatus()];
+}
+
+SimulateStep *SimulateStep::clone() const
+{
+    return new SimulateStep(*this);
+}
 // SimulateStep end ----------------------------------------
 
 // AddFacility start --------------------------------------
@@ -73,6 +86,23 @@ void AddFacility::act(Simulation &simulation)
     {
         complete();
     }
+}
+
+const string AddFacility::toString() const
+{
+    return "facility" +
+           facilityName +
+           facilityCategoryToString[facilityCategory] +
+           to_string(price) +
+           to_string(lifeQualityScore) +
+           to_string(economyScore) +
+           to_string(environmentScore) +
+           actionStatusToString[getStatus()];
+}
+
+AddFacility *AddFacility::clone() const
+{
+    return new AddFacility(*this);
 }
 // AddFacility end ----------------------------------------
 
@@ -98,10 +128,34 @@ void AddPlan::act(Simulation &simulation)
     simulation.addPlan(settlement, selectionPolicy);
     complete();
 }
+
+const string AddPlan::toString() const
+{
+    return "plan" +
+           settlementName +
+           selectionPolicy +
+           actionStatusToString[getStatus()];
+}
+
+AddPlan *AddPlan::clone() const
+{
+    return new AddPlan(*this);
+}
 // AddPlan end ----------------------------------------
 
 // BackupSimulation start --------------------------------------
-void BackupSimulation::act(Simulation& simulation){
+void BackupSimulation::act(Simulation &simulation)
+{
     backup = new Simulation(simulation);
+}
+
+const string BackupSimulation::toString() const
+{
+    return "backup";
+}
+
+BackupSimulation *BackupSimulation::clone() const
+{
+    return new BackupSimulation(*this);
 }
 // BackupSimulation end ----------------------------------------

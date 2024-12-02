@@ -17,11 +17,13 @@ enum class FacilityCategory
     ENVIRONMENT,
 };
 
+map<FacilityCategory, string> facilityCategoryToString;
+map<FacilityStatus, string> facilityStatusToString;
+
 class FacilityType
 {
 public:
     FacilityType(const string &name, const FacilityCategory category, const int price, const int lifeQuality_score, const int economy_score, const int environment_score);
-    // FacilityType(const FacilityType &other); //TODO - implement
     const string &getName() const;
     int getCost() const;
     int getLifeQualityScore() const;
