@@ -22,6 +22,7 @@ public:
     bool addFacility(FacilityType facility);
     bool isSettlementExists(const string &settlementName);
     bool isFacilityExists(const string &facilityName);
+    bool isPlanExists(const int &planId) const;
     Settlement &getSettlement(const string &settlementName);
     Plan &getPlan(const int planID);
     void step();

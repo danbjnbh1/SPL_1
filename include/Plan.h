@@ -10,6 +10,7 @@ enum class PlanStatus
     AVALIABLE,
     BUSY,
 };
+map<PlanStatus, string> planStatusToString;
 
 class Plan
 {
@@ -25,13 +26,11 @@ public:
     const vector<Facility *> &getFacilities() const;
     void addFacility(Facility *facility);
     const string toString() const;
-
+    const SelectionPolicy& getSelectionPolicy() const;
     const int getID() const; //! check if ok th add it
-
 
     const std::string printFacilities() const;
     const std::string printunfinishedFacilities() const;
-
 
 private:
     int plan_id;

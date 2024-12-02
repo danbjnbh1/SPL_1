@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <map>
 #include <iostream>
 #include <string>
 #include "Facility.h"
@@ -27,27 +28,25 @@ private:
 
 */
 
+map<PlanStatus, string> planStatusToString = {{PlanStatus::AVALIABLE, "AVALIABLE"}, {PlanStatus::BUSY, "BUSY"}};
+
 Plan::Plan(
     const int planId,
     const Settlement &settlement,
     SelectionPolicy *selectionPolicy,
-    const vector<FacilityType> &facilityOptions,): 
-        planId(planId),
-        settlement(settlement),
-        selectionPolicy(selectionPolicy),
-        facilityOptions(facilityOptions)
-    {};
+    const vector<FacilityType> &facilityOptions) : plan_id(planId),
+                                                   settlement(settlement),
+                                                   selectionPolicy(selectionPolicy),
+                                                   facilityOptions(facilityOptions) {};
 
-Plan::Plan(const Plan &other): other(other){};
-
-const int Plan::getlifeQualutyScore() const
+const int Plan::getlifeQualityScore() const
 {
     return life_quality_score;
 }
 
 const int Plan::getEconomyScore() const
 {
-    return  economy_score;
+    return economy_score;
 }
 
 const int Plan::getEnvironmentScore() const
@@ -55,12 +54,12 @@ const int Plan::getEnvironmentScore() const
     return environment_score;
 }
 
-const vertor<Facility*> Plan::getFacilities() const
+const vector<Facility *> &Plan::getFacilities() const
 {
-        return facilities;
+    return facilities;
 }
 
-const int::Plan const //there is a commen in the plan.h didn't get it
+const int Plan::getID() const
 {
     return plan_id;
 }
@@ -82,18 +81,19 @@ void Plan::printStatus()
 }
 
 const string Plan::toString() const
-{  
-    return  "Plan ID " + plan_id + "\n" +
-            "Settlement " + settlement + "\n" +
-            "The plan's status is " + printStatus() + "\n" +
-            "The life quality score is: " + life_quality_score + "\n" +
-            "The economy_score is: " + economy_score + "\n" +
-            "The environment score is: " + environment_score + "\n" +
-            "The finished facilities are: " + printFacilities() + "\n" +
-            "The unfinished are: " + printunfinishedFacilities() + "\n";
+{
+    return "Plan ID " + to_string(plan_id) + "\n"
+                                             "Settlement name" +
+           settlement.getName() + "\n" +
+           "The plan's status is " + planStatusToString[status] + "\n" +
+           "The life quality score is: " + life_quality_score + "\n" +
+           "The economy_score is: " + economy_score + "\n" +
+           "The environment score is: " + environment_score + "\n" +
+           "The finished facilities are: " + printFacilities() + "\n" +
+           "The unfinished are: " + printunfinishedFacilities() + "\n";
 }
 
-const std::string Plan::printFacilities()const
+const std::string Plan::printFacilities() const
 {
     std::string result;
     for (const Facility *facility : facilities)
@@ -110,7 +110,7 @@ const std::string Plan::printFacilities()const
     }
     return result;
 }
-const std::string Plan::printunfinishedFacilities()const
+const std::string Plan::printunfinishedFacilities() const
 {
     std::string result;
     for (const Facility *facility : underConstruction)
@@ -133,8 +133,11 @@ void Plan::setSelectionPolicy(SelectionPolicy *selectionPolicy)
     this->selectionPolicy = selectionPolicy;
 }
 
+const SelectionPolicy& Plan::getSelectionPolicy() const {
+    return *selectionPolicy;
+}
 
-/*    
+/*
 class Plan
 {
 public:
@@ -142,6 +145,5 @@ public:
     void addFacility(Facility *facility);
 
     void step();
-    
-*/
 
+*/

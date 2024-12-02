@@ -18,7 +18,7 @@ const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType>
 {
     int size = facilitiesOptions.size() / sizeof(facilitiesOptions[0]);
 
-    for (int i = lastSelectedIndex; i < size; i = (i + 1) % size) 
+    for (int i = lastSelectedIndex; i < size; i = (i + 1) % size)
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
@@ -29,7 +29,7 @@ const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType>
 
 const string EconomySelection ::toString() const
 {
-    return "The EconomySelection was selected and the last index is: " + std::to_string(lastSelectedIndex);
+    return "eco";
 }
 
 EconomySelection *EconomySelection ::clone() const
@@ -43,7 +43,7 @@ SustainabilitySelection::SustainabilitySelection() : lastSelectedIndex(-1)
 
 const FacilityType &SustainabilitySelection ::selectFacility(const vector<FacilityType> &facilitiesOptions)
 {
-    int size = facilitiesOptions.size() / sizeof(facilitiesOptions[0]); 
+    int size = facilitiesOptions.size() / sizeof(facilitiesOptions[0]);
 
     for (int i = lastSelectedIndex; i < size; i = (i + 1) % size)
     {
@@ -55,8 +55,8 @@ const FacilityType &SustainabilitySelection ::selectFacility(const vector<Facili
 }
 
 const string SustainabilitySelection ::toString() const
-{   
-    return "The SustainabilitySelection was selected and the last index is: " + std::to_string(lastSelectedIndex);
+{
+    return "env";
 }
 
 SustainabilitySelection *SustainabilitySelection ::clone() const
@@ -76,7 +76,7 @@ const FacilityType &NaiveSelection::selectFacility(const vector<FacilityType> &f
 
 const string NaiveSelection::toString() const
 {
-    return "Naive Selection: last selected index is " + to_string(lastSelectedIndex);
+    return "nve";
 }
 
 NaiveSelection *NaiveSelection::clone() const
@@ -130,11 +130,7 @@ const FacilityType &BalancedSelection::selectFacility(const vector<FacilityType>
 
 const string BalancedSelection::toString() const
 {
-    return "Balanced Selection: "
-           "\nLife Quality Score - " +
-           to_string(LifeQualityScore) +
-           "\nEconomy Score - " + to_string(EconomyScore) +
-           "\nEnvironment Score - " + to_string(EnvironmentScore);
+    return "bal";
 }
 
 BalancedSelection *BalancedSelection::clone() const
@@ -144,7 +140,10 @@ BalancedSelection *BalancedSelection::clone() const
                                  EnvironmentScore);
 }
 
-SelectionPolicy *createPolicyByName(string policyName)
+SelectionPolicy *createPolicyByName(string policyName,
+                                    int lifeQualityScore = 0,
+                                    int economyScore = 0,
+                                    int environmentScore = 0)
 {
     if (policyName == "nve")
     {
@@ -152,7 +151,7 @@ SelectionPolicy *createPolicyByName(string policyName)
     }
     if (policyName == "bal")
     {
-        return new BalancedSelection();
+        return new BalancedSelection(lifeQualityScore, economyScore, environmentScore);
     }
     if (policyName == "eco")
     {

@@ -71,7 +71,7 @@ class AddPlan : public BaseAction {
         const string selectionPolicy;
 };
 
-//!Or
+//!Dan
 class AddSettlement : public BaseAction {
     public:
         AddSettlement(const string &settlementName,SettlementType settlementType);

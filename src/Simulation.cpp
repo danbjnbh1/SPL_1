@@ -27,17 +27,20 @@ Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning), pl
     }
 
     vector<Plan> plans;
-    for (Plan plan: other.plans){
+    for (Plan plan : other.plans)
+    {
         plans.push_back(plan);
     }
 
     vector<Settlement *> settlements;
-    for (Settlement* sett: other.settlements){
+    for (Settlement *sett : other.settlements)
+    {
         settlements.push_back(new Settlement(*sett));
     }
 
     vector<FacilityType> facilitiesOptions;
-    for (FacilityType facility: other.facilitiesOptions){
+    for (FacilityType facility : other.facilitiesOptions)
+    {
         facilitiesOptions.push_back(facility);
     }
 }
@@ -104,8 +107,24 @@ void Simulation::start()
             action = new AddSettlement(parsedAction[1], static_cast<SettlementType>(stoi(parsedAction[2])));
             break;
 
+        case ActionType::CHANGE_POLICY:
+            action = new ChangePlanPolicy(stoi(parsedAction[1]), parsedAction[2]);
+            break;
+
+        case ActionType::PLAN_STATUS:
+            action = new PrintPlanStatus(stoi(parsedAction[1]));
+            break;
+
+        case ActionType::LOG:
+            action = new PrintActionsLog();
+            break;
+
         case ActionType::BACKUP:
             action = new BackupSimulation();
+            break;
+
+        case ActionType::RESTORE:
+            action = new RestoreSimulation();
             break;
 
         case ActionType::CLOSE:
@@ -117,10 +136,11 @@ void Simulation::start()
         }
 
         action->act(*this);
-        if (action->getStatus() != ActionStatus::ERROR)
-        {
-            cout << action->toString() << endl;
-        }
+        addAction(action);
+        // if (action->getStatus() != ActionStatus::ERROR)
+        // {
+        //     cout << action->getErrorMsg() << endl;
+        // }
     }
 }
 
@@ -137,7 +157,7 @@ void Simulation::addAction(BaseAction *action)
 
 bool Simulation::addSettlement(Settlement *settlement)
 {
-    if (isSettlementExists(settlement->getName()))
+    if (isSettlementExists(settlement->getName())) //? check if this to handle error here or inside the action
     {
         return false;
     }
@@ -161,10 +181,10 @@ bool Simulation::isSettlementExists(const string &settlementName)
     {
         if (sett->getName() == settlementName)
         {
-            return false;
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 bool Simulation::isFacilityExists(const string &facilityName)
@@ -173,10 +193,10 @@ bool Simulation::isFacilityExists(const string &facilityName)
     {
         if (fac.getName() == facilityName)
         {
-            return false;
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 Settlement &Simulation::getSettlement(const string &settlementName)
@@ -188,6 +208,18 @@ Settlement &Simulation::getSettlement(const string &settlementName)
             return *sett;
         }
     }
+}
+
+bool Simulation::isPlanExists(const int &planId) const
+{
+    for (Plan plan : plans)
+    {
+        if (plan.getID() == planId)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 Plan &Simulation::getPlan(const int planID)

@@ -60,14 +60,9 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
-        "bit": "cpp",
-        "map": "cpp",
-        "iterator": "cpp",
-        "memory": "cpp",
-        "memory_resource": "cpp",
-        "numeric": "cpp",
-        "random": "cpp"
+        "__tree": "cpp",
+        "execution": "cpp",
+        "map": "cpp"
     },
     "terminal.integrated.inheritEnv": false,
-    "C_Cpp.errorSquiggles": "disabled",
 }
