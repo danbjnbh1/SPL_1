@@ -1,7 +1,6 @@
 #include "Facility.h"
-
-using namespace std;
 #include <map>
+using namespace std;
 
 map<FacilityCategory, string> facilityCategoryToString = {{FacilityCategory::ECONOMY, "ECONOMY"},
                                                   {FacilityCategory::ENVIRONMENT, "ENVIRONMENT"},

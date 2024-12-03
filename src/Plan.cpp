@@ -3,30 +3,13 @@
 #include <map>
 #include <iostream>
 #include <string>
-#include "Facility.h"
+//#include "Facility.h"
 #include "Settlement.h"
 #include "SelectionPolicy.h"
 #include "Plan.h"
 using std::vector;
 using namespace std;
-/*
-enum class PlanStatus
-{
-    AVALIABLE,
-    BUSY,
-};
-private:
-    int plan_id;
-    const Settlement &settlement;
-    SelectionPolicy *selectionPolicy; // What happens if we change this to a reference?
-    PlanStatus status;
-    vector<Facility *> facilities;
-    vector<Facility *> underConstruction;
-    const vector<FacilityType> &facilityOptions;
-    int life_quality_score, economy_score, environment_score;
-};
 
-*/
 
 map<PlanStatus, string> planStatusToString = {{PlanStatus::AVALIABLE, "AVALIABLE"}, {PlanStatus::BUSY, "BUSY"}};
 
@@ -106,9 +89,9 @@ const string Plan::toString() const
                                              "Settlement name" +
            settlement.getName() + "\n" +
            "The plan's status is " + planStatusToString[status] + "\n" +
-           "The life quality score is: " + life_quality_score + "\n" +
-           "The economy_score is: " + economy_score + "\n" +
-           "The environment score is: " + environment_score + "\n" +
+           "The life quality score is: " + to_string(life_quality_score) + "\n" +
+           "The economy_score is: " + to_string(economy_score) + "\n" +
+           "The environment score is: " + to_string(environment_score) + "\n" +
            "The finished facilities are: " + printFacilities() + "\n" +
            "The unfinished are: " + printunfinishedFacilities() + "\n";
 }
@@ -159,13 +142,80 @@ const SelectionPolicy &Plan::getSelectionPolicy() const
     return *selectionPolicy;
 }
 
-/*
-class Plan
+void Plan::addFacility(Facility *facility)
 {
-public:
+    //check if the facility is already exists
+    for (const Facility *builtFacility : this->facilities) {
+        if (builtFacility && builtFacility->getName() == facility->getName()) { // Check if the facility exists and names match
+            throw std::runtime_error("“Facility already exists");    
+        }
+    }
+    for (const Facility *isbuiltFacility : this->underConstruction) {
+        if (isbuiltFacility && isbuiltFacility->getName() == facility->getName()) { // Check if the facility exists and names match
+            throw std::runtime_error("“Facility is being built exists");    
+        }
+    }   
+    if(this->status == PlanStatus::AVALIABLE)
+    {
+        underConstruction.push_back(facility);
+        int sizeOfUnderConstruction = underConstruction.size();
+        int maxOfUnderConstruction = static_cast<int>(this->settlement.getType());
+        if (sizeOfUnderConstruction == maxOfUnderConstruction)
+        {
+            this->status == PlanStatus::BUSY;
+        }
+    }
+    else
+    {
+        cout << "The plan is busy now, can not build a new facility" << endl;
+    }
+}
 
-    void addFacility(Facility *facility);
+void Plan::step()
+{
 
-    void step();
+    for (auto it = underConstruction.begin(); it != underConstruction.end(); ) {
+        Facility *facility = *it;
 
-*/
+        // Advance the facility's construction status
+        FacilityStatus status = facility->step();
+
+        // If the facility is now operational, move it to the facilities list
+        if (status == FacilityStatus::OPERATIONAL) {
+            facilities.push_back(facility);       // Add to operational facilities
+            it = underConstruction.erase(it);    // Remove from underConstruction list
+        } 
+        else {
+            ++it; // Move to the next facility
+        }
+    }
+
+    // Get the settlement type of the current plan
+    const Settlement &sett = this->settlement;
+    SettlementType type = sett.getType();
+
+    // Check the settlement type and update the plan's status accordingly
+    switch (type) {
+        case SettlementType::VILLAGE:
+            if (this->underConstruction.size() < 1) {
+                this->status = PlanStatus::AVALIABLE; // Update status to AVAILABLE if criteria met
+            }
+            break;
+
+        case SettlementType::CITY:
+            if (this->underConstruction.size() < 2) {
+                this->status = PlanStatus::AVALIABLE; // Update status to AVAILABLE if criteria met
+            }
+            break;
+
+        case SettlementType::METROPOLIS:
+            if (this->underConstruction.size() < 3) {
+                this->status = PlanStatus::AVALIABLE; // Update status to AVAILABLE if criteria met
+            }
+            break;
+
+        default:
+            std::cerr << "Unknown SettlementType" << std::endl; // Handle unexpected settlement types
+    }
+
+}

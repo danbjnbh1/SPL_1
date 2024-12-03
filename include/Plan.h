@@ -2,15 +2,17 @@
 #include <vector>
 #include "Facility.h"
 #include "Settlement.h"
+#include <map>
 #include "SelectionPolicy.h"
 using std::vector;
+using namespace std; 
 
 enum class PlanStatus
 {
     AVALIABLE,
     BUSY,
 };
-map<PlanStatus, string> planStatusToString;
+//map<PlanStatus, string> planStatusToString; // it did problem of override in the Plan.cpp now all compile without that 
 
 class Plan
 {

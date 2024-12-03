@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 using std::string;
 using std::vector;
 
@@ -17,8 +18,8 @@ enum class FacilityCategory
     ENVIRONMENT,
 };
 
-map<FacilityCategory, string> facilityCategoryToString;
-map<FacilityStatus, string> facilityStatusToString;
+// map<FacilityCategory, string> facilityCategoryToString;
+// map<FacilityStatus, string> facilityStatusToString;
 
 class FacilityType
 {
