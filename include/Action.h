@@ -25,7 +25,7 @@ enum class ActionType{
 
 ActionType getActionType(string &actionTypeStr);
 
-const map<ActionStatus, string> actionStatusToString;
+extern map<ActionStatus, string> actionStatusToString;
 
 //! Dan
 class BaseAction{

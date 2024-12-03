@@ -27,20 +27,21 @@ Plan::Plan(const Plan &other)
       settlement(other.settlement),
       selectionPolicy(other.selectionPolicy->clone()),
       status(other.status),
+      facilityOptions(other.facilityOptions),
       life_quality_score(other.life_quality_score),
       economy_score(other.economy_score),
-      environment_score(other.environment_score),
-      facilityOptions(other.facilityOptions)
+      environment_score(other.environment_score)
 {
-    for (Facility *facility : other.facilities) {
-        facilities.push_back(new Facility(*facility));  
+    for (Facility *facility : other.facilities)
+    {
+        facilities.push_back(new Facility(*facility));
     }
 
-    for (Facility *facility : other.underConstruction) {
-        underConstruction.push_back(new Facility(*facility));  
+    for (Facility *facility : other.underConstruction)
+    {
+        underConstruction.push_back(new Facility(*facility));
     }
 }
-
 
 const int Plan::getlifeQualityScore() const
 {

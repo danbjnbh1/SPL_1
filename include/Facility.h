@@ -5,6 +5,8 @@
 using std::string;
 using std::vector;
 
+using namespace std;
+
 enum class FacilityStatus
 {
     UNDER_CONSTRUCTIONS,

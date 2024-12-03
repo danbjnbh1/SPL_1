@@ -12,7 +12,7 @@ using namespace std;
 class Facility; 
 
 
-map<SettlementType, string> SettlementToString = {{SettlementType::VILLAGE, "VILLAGE"},
+map<SettlementType, string> settlementToString = {{SettlementType::VILLAGE, "VILLAGE"},
                                                   {SettlementType::CITY, "CITY"},
                                                   {SettlementType::METROPOLIS, "METROPOLIS"}};
 
@@ -34,6 +34,6 @@ const string Settlement :: toString() const
     
     return "Settlement Details: \n" 
             "Name of the Settlement: " + name + "\n" +
-            "Settlement type is " + SettlementToString[type];
+            "Settlement type is " + settlementToString[type];
     
 }

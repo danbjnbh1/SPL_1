@@ -1,7 +1,8 @@
 #include "Action.h"
+#include "SelectionPolicy.h"
 #include "Facility.h"
 #include <map>
-#include <iostream> 
+#include <iostream>
 extern Simulation *backup;
 
 using namespace std;
@@ -25,9 +26,14 @@ ActionType getActionType(string &actionTypeStr)
     return stringToEnum[actionTypeStr];
 }
 
-const map<ActionStatus, string> actionStatusToString = {{ActionStatus::COMPLETED, "COMPLETED"}, {ActionStatus::ERROR, "ERROR"}};
+map<ActionStatus, string> actionStatusToString = {{ActionStatus::COMPLETED, "COMPLETED"}, {ActionStatus::ERROR, "ERROR"}};
 
 // BaseAction start --------------------------------------
+BaseAction::BaseAction()
+{
+    // Implementation
+}
+
 ActionStatus BaseAction::getStatus() const
 {
     return status;
@@ -146,6 +152,11 @@ AddPlan *AddPlan::clone() const
 // AddPlan end ----------------------------------------
 
 // BackupSimulation start --------------------------------------
+BackupSimulation::BackupSimulation()
+{
+    // Implementation
+}
+
 void BackupSimulation::act(Simulation &simulation)
 {
     backup = new Simulation(simulation);
@@ -160,6 +171,29 @@ const string BackupSimulation::toString() const
 BackupSimulation *BackupSimulation::clone() const
 {
     return new BackupSimulation(*this);
+}
+// BackupSimulation end ----------------------------------------
+
+// BackupSimulation start --------------------------------------
+RestoreSimulation::RestoreSimulation()
+{
+    // Implementation
+}
+
+void RestoreSimulation::act(Simulation &simulation)
+{
+    simulation = *backup;
+    complete();
+}
+
+const string RestoreSimulation::toString() const
+{
+    return "restore";
+}
+
+RestoreSimulation *RestoreSimulation::clone() const
+{
+    return new RestoreSimulation(*this);
 }
 // BackupSimulation end ----------------------------------------
 
@@ -181,8 +215,6 @@ void AddSettlement::act(Simulation &simulation)
     simulation.addSettlement(new Settlement(settlementName, settlementType));
     complete();
 }
-
-AddSettlement::AddSettlement(const string &settlementName, SettlementType settlementType) : settlementName(settlementName), settlementType(settlementType) {};
 
 AddSettlement *AddSettlement::clone() const
 {
@@ -233,3 +265,55 @@ ChangePlanPolicy *ChangePlanPolicy::clone() const
     return new ChangePlanPolicy(*this);
 }
 // ChangePlanPolicy end ----------------------------------------
+
+PrintPlanStatus::PrintPlanStatus(int planId) : planId(planId) {
+    // Implementation (if needed)
+}
+
+void PrintPlanStatus::act(Simulation &simulation) {
+    // Implementation
+}
+
+PrintPlanStatus* PrintPlanStatus::clone() const {
+    return new PrintPlanStatus(*this);
+}
+
+const string PrintPlanStatus::toString() const {
+    return "PrintPlanStatus";
+}
+
+PrintActionsLog::PrintActionsLog()
+{
+    // Implementation
+}
+
+void PrintActionsLog::act(Simulation &simulation)
+{
+    // Implementation
+}
+
+PrintActionsLog *PrintActionsLog::clone() const
+{
+    return new PrintActionsLog(*this);
+}
+
+const string PrintActionsLog::toString() const
+{
+    return "";
+}
+
+Close::Close() {
+    // Implementation (if needed)
+}
+
+void Close::act(Simulation &simulation) {
+    // Implementation
+}
+
+Close* Close::clone() const {
+    return new Close(*this);
+}
+
+const string Close::toString() const {
+    return "Close";
+}

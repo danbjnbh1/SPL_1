@@ -3,7 +3,6 @@
 #include "Facility.h"
 #include <map>
 #include "SelectionPolicy.h"
-#include "SelectionPolicy.h"
 #include <algorithm>
 #include <climits>
 
@@ -141,9 +140,9 @@ BalancedSelection *BalancedSelection::clone() const
 }
 
 SelectionPolicy *createPolicyByName(string policyName,
-                                    int lifeQualityScore = 0,
-                                    int economyScore = 0,
-                                    int environmentScore = 0)
+                                    int lifeQualityScore,
+                                    int economyScore,
+                                    int environmentScore)
 {
     if (policyName == "nve")
     {
