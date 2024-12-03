@@ -38,10 +38,10 @@ Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
 
 Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
                                              planCounter(other.planCounter),
-                                             actionsLog(move(other.actionsLog)),
-                                             plans(move(other.plans)),
-                                             settlements(move(other.settlements)),
-                                             facilitiesOptions(move(other.facilitiesOptions))
+                                             actionsLog(std::move(other.actionsLog)),
+                                             plans(std::move(other.plans)),
+                                             settlements(std::move(other.settlements)),
+                                             facilitiesOptions(std::move(other.facilitiesOptions))
 {
 }
 
@@ -116,10 +116,10 @@ const Simulation &Simulation::operator=(Simulation &&other)
 
     isRunning = other.isRunning;
     planCounter = other.planCounter;
-    actionsLog = move(other.actionsLog);
-    plans = move(other.plans);
-    settlements = move(other.settlements);
-    facilitiesOptions = move(other.facilitiesOptions);
+    actionsLog = std::move(other.actionsLog);
+    plans = std::move(other.plans);
+    settlements = std::move(other.settlements);
+    facilitiesOptions = std::move(other.facilitiesOptions);
 
     return *this;
 }
