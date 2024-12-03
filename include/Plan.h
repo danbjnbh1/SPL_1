@@ -27,7 +27,7 @@ public:
     void addFacility(Facility *facility);
     const string toString() const;
     const SelectionPolicy& getSelectionPolicy() const;
-    const int getID() const; //! check if ok th add it
+    const int getID() const;
 
     const std::string printFacilities() const;
     const std::string printunfinishedFacilities() const;
