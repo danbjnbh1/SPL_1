@@ -44,20 +44,21 @@ Plan::Plan(const Plan &other)
       settlement(other.settlement),
       selectionPolicy(other.selectionPolicy->clone()),
       status(other.status),
+      facilityOptions(other.facilityOptions),
       life_quality_score(other.life_quality_score),
       economy_score(other.economy_score),
-      environment_score(other.environment_score),
-      facilityOptions(other.facilityOptions)
+      environment_score(other.environment_score)
 {
-    for (Facility *facility : other.facilities) {
-        facilities.push_back(new Facility(*facility));  
+    for (Facility *facility : other.facilities)
+    {
+        facilities.push_back(new Facility(*facility));
     }
 
-    for (Facility *facility : other.underConstruction) {
-        underConstruction.push_back(new Facility(*facility));  
+    for (Facility *facility : other.underConstruction)
+    {
+        underConstruction.push_back(new Facility(*facility));
     }
 }
-
 
 const int Plan::getlifeQualityScore() const
 {
@@ -106,9 +107,9 @@ const string Plan::toString() const
                                              "Settlement name" +
            settlement.getName() + "\n" +
            "The plan's status is " + planStatusToString[status] + "\n" +
-           "The life quality score is: " + life_quality_score + "\n" +
-           "The economy_score is: " + economy_score + "\n" +
-           "The environment score is: " + environment_score + "\n" +
+           "The life quality score is: " + to_string(life_quality_score) + "\n" +
+           "The economy_score is: " + to_string(economy_score) + "\n" +
+           "The environment score is: " + to_string(environment_score) + "\n" +
            "The finished facilities are: " + printFacilities() + "\n" +
            "The unfinished are: " + printunfinishedFacilities() + "\n";
 }
@@ -157,6 +158,11 @@ void Plan::setSelectionPolicy(SelectionPolicy *selectionPolicy)
 const SelectionPolicy &Plan::getSelectionPolicy() const
 {
     return *selectionPolicy;
+}
+
+void Plan::step()
+{
+    // Implementation
 }
 
 /*

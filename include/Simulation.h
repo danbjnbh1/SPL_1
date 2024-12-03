@@ -15,6 +15,11 @@ class Simulation
 public:
     Simulation(const string &configFilePath);
     Simulation(const Simulation& other);
+    Simulation(Simulation &&other);
+    ~Simulation();
+    const Simulation& operator=(const Simulation& other);
+    const Simulation& operator=(Simulation&& other);
+
     void start();
     void addPlan(const Settlement &settlement, SelectionPolicy *selectionPolicy);
     void addAction(BaseAction *action);

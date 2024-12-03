@@ -91,6 +91,8 @@ FacilityStatus Facility::step()
     {
         setStatus(FacilityStatus::OPERATIONAL);
     }
+
+    return status;
 }
 
 void Facility::setStatus(FacilityStatus status)

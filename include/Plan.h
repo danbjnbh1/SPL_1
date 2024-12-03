@@ -10,7 +10,7 @@ enum class PlanStatus
     AVALIABLE,
     BUSY,
 };
-map<PlanStatus, string> planStatusToString;
+extern map<PlanStatus, string> planStatusToString;
 
 class Plan
 {

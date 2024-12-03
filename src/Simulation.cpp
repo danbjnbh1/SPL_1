@@ -4,36 +4,124 @@
 #include "Action.h"
 #include "Auxiliary.h"
 #include "Plan.h"
+#include "SelectionPolicy.h"
 
 using namespace std;
 
-Simulation::Simulation(const string &configFilePath)
+Simulation::Simulation(const string &configFilePath) : isRunning(false),
+                                                       planCounter(0),
+                                                       actionsLog(),
+                                                       plans(),
+                                                       settlements(),
+                                                       facilitiesOptions()
 {
-    isRunning = false;
-    planCounter = 0;
-    actionsLog = vector<BaseAction *>();
-    plans = vector<Plan>();
-    settlements = vector<Settlement *>();
-    facilitiesOptions = vector<FacilityType>();
     initSimulation(configFilePath);
 }
 
 Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
                                                   planCounter(other.planCounter),
+                                                  actionsLog(),
                                                   plans(other.plans),
+                                                  settlements(),
                                                   facilitiesOptions(other.facilitiesOptions)
 {
-    vector<BaseAction *> actionsLog;
     for (BaseAction *action : other.actionsLog)
     {
         actionsLog.push_back(action->clone());
     }
 
-    vector<Settlement *> settlements(other.settlements);
     for (Settlement *sett : other.settlements)
     {
         settlements.push_back(new Settlement(*sett));
     }
+}
+
+Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
+                                             planCounter(other.planCounter),
+                                             actionsLog(move(other.actionsLog)),
+                                             plans(move(other.plans)),
+                                             settlements(move(other.settlements)),
+                                             facilitiesOptions(move(other.facilitiesOptions))
+{
+}
+
+Simulation::~Simulation()
+{
+    for (BaseAction *action : actionsLog)
+    {
+        delete action;
+    }
+
+    for (Settlement *sett : settlements)
+    {
+        delete sett;
+    }
+}
+
+const Simulation &Simulation::operator=(const Simulation &other)
+{
+    if (this == &other)
+    {
+        return *this;
+    }
+
+    for (BaseAction *action : actionsLog)
+    {
+        delete action;
+    }
+    actionsLog.clear();
+
+    for (Settlement *sett : settlements)
+    {
+        delete sett;
+    }
+    settlements.clear();
+
+    isRunning = other.isRunning;
+    planCounter = other.planCounter;
+    plans = vector<Plan>(other.plans);
+    facilitiesOptions = vector<FacilityType>(other.facilitiesOptions);
+
+    for (BaseAction *action : other.actionsLog)
+    {
+        actionsLog.push_back(action->clone());
+    }
+
+    for (Settlement *sett : other.settlements)
+    {
+        settlements.push_back(new Settlement(*sett));
+    }
+
+    return *this;
+}
+
+const Simulation &Simulation::operator=(Simulation &&other)
+{
+    if (this == &other)
+    {
+        return *this;
+    }
+
+    for (BaseAction *action : actionsLog)
+    {
+        delete action;
+    }
+    actionsLog.clear();
+
+    for (Settlement *sett : settlements)
+    {
+        delete sett;
+    }
+    settlements.clear();
+
+    isRunning = other.isRunning;
+    planCounter = other.planCounter;
+    actionsLog = move(other.actionsLog);
+    plans = move(other.plans);
+    settlements = move(other.settlements);
+    facilitiesOptions = move(other.facilitiesOptions);
+
+    return *this;
 }
 
 void Simulation::initSimulation(const string &configFilePath)
