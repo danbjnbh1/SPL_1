@@ -248,12 +248,12 @@ void Plan::step()
 void Plan::updateStatus()
 {
     const int maxUnderConstruction = static_cast<int>(this->settlement.getType()) + 1;
-    if (this->underConstruction.size() == maxUnderConstruction)
+    if (underConstruction.size() == maxUnderConstruction)
     {
-        this->status = PlanStatus::BUSY;
+        status = PlanStatus::BUSY;
     }
     else
     {
-        this->status = PlanStatus::AVALIABLE;
+        status = PlanStatus::AVALIABLE;
     }
 }
