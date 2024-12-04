@@ -75,6 +75,26 @@ const int Plan::getID() const
 
 void Plan::printStatus()
 {
+    cout << "PlanID: " + this->plan_id << endl;
+    cout << "SettlementName: " + this->getSettlement().getName();
+    cout << "PlanStatus: " + planStatusToString[this->status];
+    cout << "SelectionPolicy: " +  this->getSelectionPolicy().toString();
+    cout << "LifeQualityScore: " + this->getlifeQualityScore();
+    cout << "EconomyScore: " + this->getEconomyScore();
+    cout << "EnvrionmentScore: " + this->getEnvironmentScore();
+    
+    // Loop through the facilities vector
+    for (const auto& facility : this->getFacilities()) {
+        cout << "FacilityName: " << facility->getName() + "/n";
+        cout << "FacilityStatus: " << "OPERATIONAL" << std::endl;
+    }
+    
+    // Loop through the underConstruction vector
+    std::cout << "Under Construction:" << std::endl;
+    for (const auto& facility : this->getUnderConstruction()) {
+        std::cout << "Name: " << facility->getName()
+                  << ", Status: " << "UNDER_CONSTRUCTIONS" << std::endl;
+    }
     switch (status)
     {
     case PlanStatus::AVALIABLE:
@@ -171,7 +191,7 @@ void Plan::addFacility(Facility *facility)
     }
     for (const Facility *isbuiltFacility : this->underConstruction) {
         if (isbuiltFacility && isbuiltFacility->getName() == facility->getName()) { // Check if the facility exists and names match
-            throw std::runtime_error(“Facility is being built exists");    
+            throw std::runtime_error("Facility is being built exists");    
         }
     }   
     if(this->status == PlanStatus::AVALIABLE)
