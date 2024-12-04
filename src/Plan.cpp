@@ -185,26 +185,12 @@ const SelectionPolicy &Plan::getSelectionPolicy() const
 
 void Plan::addFacility(Facility *facility)
 {
-    // check if the facility is already exists
-    for (const Facility *builtFacility : this->facilities)
-    {
-        if (builtFacility && builtFacility->getName() == facility->getName())
-        { // Check if the facility exists and names match
-            throw std::runtime_error("Facility already exists");
-        }
-    }
-    for (const Facility *isbuiltFacility : this->underConstruction)
-    {
-        if (isbuiltFacility && isbuiltFacility->getName() == facility->getName())
-        { // Check if the facility exists and names match
-            throw std::runtime_error("Facility is being built exists");
-        }
-    }
-    if (this->status == PlanStatus::AVALIABLE)
+
+    if(this->status == PlanStatus::AVALIABLE)
     {
         underConstruction.push_back(facility);
         int sizeOfUnderConstruction = underConstruction.size();
-        int maxOfUnderConstruction = static_cast<int>(this->settlement.getType());
+        int maxOfUnderConstruction = static_cast<int>(this->settlement.getType()) + 1;
         if (sizeOfUnderConstruction == maxOfUnderConstruction)
         {
             this->status == PlanStatus::BUSY;
@@ -218,6 +204,12 @@ void Plan::addFacility(Facility *facility)
 
 void Plan::step()
 {
+    while (status == PlanStatus::AVALIABLE)
+    {
+        FacilityType newFacilityType = selectionPolicy->selectFacility(facilityOptions);
+        Facility *newFacility = new Facility(newFacilityType, settlement.getName());
+        addFacility(newFacility);
+    }
 
     for (auto it = underConstruction.begin(); it != underConstruction.end();)
     {
