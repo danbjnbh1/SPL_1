@@ -74,7 +74,7 @@ const int Plan::getID() const
 
 void Plan::printStatus()
 {
-    cout << "PlanID: " + plan_id << endl;
+    cout << "PlanID: " + to_string(plan_id) << endl;
     cout << "SettlementName: " + getSettlement().getName();
     cout << "PlanStatus: " + planStatusToString[this->status];
     cout << "SelectionPolicy: " + selectionPolicy->toString();
