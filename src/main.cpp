@@ -31,9 +31,8 @@ int main(int argc, char **argv)
     string configurationFile = argv[1];
     cout << configurationFile + " this is the file path" << endl;
     Simulation simulation(configurationFile);
-
     simulation.start();
-  
+/*  
     if (backup != nullptr)
     {
         delete backup;
@@ -42,4 +41,5 @@ int main(int argc, char **argv)
 
     facilityTest();
     return 0;
+    */
 }

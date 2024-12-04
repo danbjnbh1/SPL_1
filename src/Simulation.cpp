@@ -286,6 +286,9 @@ Settlement &Simulation::getSettlement(const string &settlementName)
             return *sett;
         }
     }
+
+    // If no settlement matches, throw an exception
+    throw std::runtime_error("Settlement with name '" + settlementName + "' not found");
 }
 
 bool Simulation::isPlanExists(const int &planId) const
@@ -302,14 +305,18 @@ bool Simulation::isPlanExists(const int &planId) const
 
 Plan &Simulation::getPlan(const int planID)
 {
-    for (Plan plan : plans)
+    for (Plan &plan : plans) // Use a reference to iterate
     {
         if (plan.getID() == planID)
         {
-            return plan;
+            return plan; // Return a reference to the existing object
         }
     }
+
+    // Handle the case where no matching plan is found
+    throw std::runtime_error("Plan not found");
 }
+
 
 void Simulation::step()
 {
