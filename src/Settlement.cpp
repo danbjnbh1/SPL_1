@@ -4,8 +4,6 @@
 #include <iostream>
 #include <map>
 #include "Settlement.h"
-using std::string;
-using std::vector;
 
 using namespace std;
 

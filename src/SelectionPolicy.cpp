@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <climits>
 
-using std::vector;
 using namespace std;
 
 EconomySelection::EconomySelection() : lastSelectedIndex(-1)

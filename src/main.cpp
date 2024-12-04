@@ -28,18 +28,19 @@ int main(int argc, char **argv)
         return 0;
     }
     string configurationFile = argv[1];
+    cout << configurationFile + " this is the file path" << endl;
     Simulation simulation(configurationFile);
     simulation.start();
-    if (backup != nullptr)
-    {
-        delete backup;
-        backup = nullptr;
-    }
+    // if (backup != nullptr)
+    // {
+    //     delete backup;
+    //     backup = nullptr;
+    // }
 
-    facilityTest();
-    cout << "Test print" << endl;
-    Settlement *s = new Settlement("dadush", SettlementType::METROPOLIS);
-    cout << s->toString() << endl;
+    // facilityTest();
+    // cout << "Test print" << endl;
+    // Settlement *s = new Settlement("dadush", SettlementType::METROPOLIS);
+    // cout << s->toString() << endl;
 
     return 0;
 }

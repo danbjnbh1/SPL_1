@@ -268,11 +268,11 @@ ChangePlanPolicy *ChangePlanPolicy::clone() const
 
 // PrintPlanStatus start --------------------------------------
 
-PrintPlanStatus::PrintPlanStatus(int planId): planId(planId){};
+PrintPlanStatus::PrintPlanStatus(int planId) : planId(planId) {};
 
 void PrintPlanStatus::act(Simulation &simulation)
 {
-    if(!simulation.isPlanExists(planId))
+    if (!simulation.isPlanExists(planId))
     {
         error("Plan doesn't exist");
         return;
@@ -280,10 +280,9 @@ void PrintPlanStatus::act(Simulation &simulation)
 
     Plan planToPrint = simulation.getPlan(this->planId);
     planToPrint.printStatus();
-       
 }
 
-PrintPlanStatus* PrintPlanStatus::clone() const
+PrintPlanStatus *PrintPlanStatus::clone() const
 {
     return new PrintPlanStatus(*this);
 }
@@ -297,15 +296,15 @@ const string PrintPlanStatus::toString() const
 
 // PrintActionsLog start ------------------------------------
 
-PrintActionsLog::PrintActionsLog(){};
+PrintActionsLog::PrintActionsLog() {};
 
 void PrintActionsLog::act(Simulation &simulation)
 {
     vector<BaseAction *> logs = simulation.getActionsLog();
-    //missing implimations
+    // missing implimations
 }
 
-PrintActionsLog* PrintActionsLog::clone() const
+PrintActionsLog *PrintActionsLog::clone() const
 {
     return new PrintActionsLog(*this);
 }
@@ -317,22 +316,23 @@ const string PrintActionsLog::toString() const
 
 // PrintActionsLog end ------------------------------------
 
-//Close start ---------------------------------------------
+// Close start ---------------------------------------------
 
-Close::Close(){};
+Close::Close() {};
 
 void Close::act(Simulation &simulation)
 {
     vector<Plan> plans = simulation.getPlans();
-    for (const auto& plan : plans) {
-        plan.toStringFinish();
+    for (const Plan &plan : plans)
+    {
+        plan.toString();
     }
     simulation.close();
-    //memort leak
-    //if need to close somting else
+    // memort leak
+    // if need to close somting else
 }
 
-Close* Close::clone() const
+Close *Close::clone() const
 {
     return new Close(*this);
 }
@@ -341,4 +341,4 @@ const string Close::toString() const
 {
     return "Use the method act() to close the simulation";
 }
-//Close end -----------------------------------------------
+// Close end -----------------------------------------------

@@ -152,7 +152,8 @@ void Simulation::initSimulation(const string &configFilePath)
             Settlement &settlement = getSettlement(lineArgs[1]);
             SelectionPolicy *selectionPolicy = createPolicyByName(lineArgs[1]);
 
-            plans.push_back(Plan(planCounter++, settlement, selectionPolicy, facilitiesOptions));
+            Plan plan(planCounter++, settlement, selectionPolicy, facilitiesOptions);
+            // plans.push_back(plan);
         }
     }
 }

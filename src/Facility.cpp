@@ -3,11 +3,11 @@
 using namespace std;
 
 map<FacilityCategory, string> facilityCategoryToString = {{FacilityCategory::ECONOMY, "ECONOMY"},
-                                                  {FacilityCategory::ENVIRONMENT, "ENVIRONMENT"},
-                                                  {FacilityCategory::LIFE_QUALITY, "LIFE_QUALITY"}};
+                                                          {FacilityCategory::ENVIRONMENT, "ENVIRONMENT"},
+                                                          {FacilityCategory::LIFE_QUALITY, "LIFE_QUALITY"}};
 
 map<FacilityStatus, string> facilityStatusToString = {{FacilityStatus::OPERATIONAL, "OPERATIONAL"},
-                                              {FacilityStatus::UNDER_CONSTRUCTIONS, "Environment"}};
+                                                      {FacilityStatus::UNDER_CONSTRUCTIONS, "Environment"}};
 
 FacilityType::FacilityType(
     const string &name,
@@ -61,9 +61,9 @@ Facility::Facility(
     const int lifeQuality_score,
     const int economy_score,
     const int environment_score) : FacilityType(name, category, price, lifeQuality_score, economy_score, environment_score),
-                                   settlementName(settlementName), status(FacilityStatus::UNDER_CONSTRUCTIONS), timeLeft(price){};
+                                   settlementName(settlementName), status(FacilityStatus::UNDER_CONSTRUCTIONS), timeLeft(price) {};
 Facility::
-    Facility(const FacilityType &type, const string &settlementName) : FacilityType(type), settlementName(settlementName), status(FacilityStatus::UNDER_CONSTRUCTIONS), timeLeft(price){};
+    Facility(const FacilityType &type, const string &settlementName) : FacilityType(type), settlementName(settlementName), status(FacilityStatus::UNDER_CONSTRUCTIONS), timeLeft(price) {};
 
 const string &Facility::getSettlementName() const
 {
@@ -98,13 +98,6 @@ const FacilityStatus &Facility::getStatus() const
 
 const string Facility::toString() const
 {
-    return "Name: " + name + "\n" +
-           "Category: " + facilityCategoryToString[category] + "\n" +
-           "Price: " + to_string(price) + "\n" +
-           "Life Quality Score: " + to_string(lifeQuality_score) + "\n" +
-           "Economy Score: " + to_string(economy_score) + "\n" +
-           "Environment Score: " + to_string(environment_score) + "\n" +
-           "Status: " + facilityStatusToString[status] + "\n" +
-           "Time Left" + to_string(timeLeft) + "\n" +
-           "Settlement Name" + settlementName;
+    return "facilityName: " + name + "\n" +
+           "facilityCategory: " + facilityCategoryToString[category];
 }

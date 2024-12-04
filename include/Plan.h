@@ -4,7 +4,6 @@
 #include "Settlement.h"
 #include <map>
 #include "SelectionPolicy.h"
-using std::vector;
 using namespace std; 
 
 enum class PlanStatus
@@ -12,7 +11,7 @@ enum class PlanStatus
     AVALIABLE,
     BUSY,
 };
-//map<PlanStatus, string> planStatusToString; // it did problem of override in the Plan.cpp now all compile without that 
+extern map<PlanStatus, string> planStatusToString; // it did problem of override in the Plan.cpp now all compile without that 
 
 class Plan
 {
@@ -32,8 +31,8 @@ public:
     const string toStringFinish() const;
     const SelectionPolicy& getSelectionPolicy() const;
     const int getID() const;
-    const std::string printFacilities() const;
-    const std::string printunfinishedFacilities() const;
+    const string printFacilities() const;
+    const string printunfinishedFacilities() const;
     const Settlement getSettlement() const;
     void updateStatus();
 
