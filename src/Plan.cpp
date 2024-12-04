@@ -31,7 +31,7 @@ Plan::Plan(
 Plan::Plan(const Plan &other)
     : plan_id(other.plan_id),
       settlement(other.settlement),  
-      selectionPolicy(other.selectionPolicy),  
+      selectionPolicy(),  
       status(other.status), 
       facilities(),  // Default-initialize the vector
       underConstruction(),  // Default-initialize the vector
@@ -40,6 +40,7 @@ Plan::Plan(const Plan &other)
       economy_score(other.economy_score),  
       environment_score(other.environment_score) 
 {
+    selectionPolicy = other.selectionPolicy->clone();
     // Deep copy of facilities
     for (Facility *facility : other.facilities)
     {
