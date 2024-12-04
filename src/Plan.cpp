@@ -185,20 +185,10 @@ const SelectionPolicy &Plan::getSelectionPolicy() const
 
 void Plan::addFacility(Facility *facility)
 {
-
     if(this->status == PlanStatus::AVALIABLE)
     {
         underConstruction.push_back(facility);
-        int sizeOfUnderConstruction = underConstruction.size();
-        int maxOfUnderConstruction = static_cast<int>(this->settlement.getType()) + 1;
-        if (sizeOfUnderConstruction == maxOfUnderConstruction)
-        {
-            this->status == PlanStatus::BUSY;
-        }
-    }
-    else
-    {
-        cout << "The plan is busy now, can not build a new facility" << endl;
+        updateStatus();
     }
 }
 
