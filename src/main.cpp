@@ -21,7 +21,7 @@ void facilityTest()
 
 int main(int argc, char **argv)
 {
-
+/*
     if (argc != 2)
     {
         cout << "usage: simulation <config_path>" << endl;
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     Simulation simulation(configurationFile);
     cout << "ok" << endl;
     
-    /*
+
     simulation.start();
   
     if (backup != nullptr)

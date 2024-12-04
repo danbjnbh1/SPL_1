@@ -19,6 +19,11 @@ class Plan
 public:
     Plan(const int planId, const Settlement &settlement, SelectionPolicy *selectionPolicy, const vector<FacilityType> &facilityOptions);
     Plan(const Plan &other);
+    Plan(Plan &&other);
+    ~Plan();
+    const Plan& operator=(const Plan& other);
+    const Plan& operator=(Plan&& other);
+
     const int getlifeQualityScore() const;
     const int getEconomyScore() const;
     const int getEnvironmentScore() const;

@@ -21,6 +21,7 @@ Plan::Plan(
                                                    selectionPolicy(selectionPolicy),
                                                    facilityOptions(facilityOptions) {};
 
+//copy Constructor 
 Plan::Plan(const Plan &other)
     : plan_id(other.plan_id),
       settlement(other.settlement),
@@ -40,6 +41,101 @@ Plan::Plan(const Plan &other)
     {
         underConstruction.push_back(new Facility(*facility));
     }
+}
+
+//distractor 
+Plan::~Plan()
+{
+    delete selectionPolicy; // Free the dynamically allocated SelectionPolicy.
+
+    for (Facility *facility : facilities)
+    {
+        delete facility;
+    }
+    for (Facility *facility : underConstruction)
+    {
+        delete facility;
+    }
+    
+}
+
+//copy assigmnet Operator
+const Plan &Plan::operator=(const Plan &other) {
+    if (this == &other) return *this; // Self-assignment check
+
+    // Clean up existing resources
+    delete selectionPolicy;
+    for (Facility *facility : facilities) {
+        delete facility;
+    }
+    for (Facility *facility : underConstruction) {
+        delete facility;
+    }
+
+    // Copy resources
+    selectionPolicy = other.selectionPolicy ? other.selectionPolicy->clone() : nullptr;
+    facilities.clear();
+    for (Facility *facility : other.facilities) {
+        facilities.push_back(new Facility(*facility));
+    }
+    underConstruction.clear();
+    for (Facility *facility : other.underConstruction) {
+        underConstruction.push_back(new Facility(*facility));
+    }
+
+    // Copy other fields
+    plan_id = other.plan_id;
+    status = other.status;
+    life_quality_score = other.life_quality_score;
+    economy_score = other.economy_score;
+    environment_score = other.environment_score;
+
+    return *this;
+}
+
+//Move Operator
+Plan::Plan(Plan &&other) 
+    : plan_id(other.plan_id),
+      settlement(other.settlement),
+      selectionPolicy(other.selectionPolicy),
+      status(other.status),
+      facilities(std::move(other.facilities)),
+      underConstruction(std::move(other.underConstruction)),
+      facilityOptions(other.facilityOptions),
+      life_quality_score(other.life_quality_score),
+      economy_score(other.economy_score),
+      environment_score(other.environment_score) {
+    other.selectionPolicy = nullptr;
+}
+//Move Assignment Operator
+const Plan &Plan::operator=(Plan &&other)
+{
+    if (this == &other) return *this; // Self-assignment check
+
+    // Clean up existing resources
+    delete selectionPolicy;
+    for (Facility *facility : facilities) {
+        delete facility;
+    }
+    for (Facility *facility : underConstruction) {
+        delete facility;
+    }
+
+    // Transfer resources
+    selectionPolicy = other.selectionPolicy;
+    facilities = std::move(other.facilities);
+    underConstruction = std::move(other.underConstruction);
+
+    // Transfer other fields
+    plan_id = other.plan_id;
+    status = other.status;
+    life_quality_score = other.life_quality_score;
+    economy_score = other.economy_score;
+    environment_score = other.environment_score;
+
+    other.selectionPolicy = nullptr;
+
+    return *this;
 }
 
 const int Plan::getlifeQualityScore() const

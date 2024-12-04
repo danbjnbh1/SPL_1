@@ -17,7 +17,7 @@ Simulation::Simulation(const string &configFilePath) : isRunning(false),
 {
     initSimulation(configFilePath);
 }
-
+//copy constructor
 Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
                                                   planCounter(other.planCounter),
                                                   actionsLog(),
@@ -35,7 +35,7 @@ Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
         settlements.push_back(new Settlement(*sett));
     }
 }
-
+//move copy construcor 
 Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
                                              planCounter(other.planCounter),
                                              actionsLog(std::move(other.actionsLog)),
@@ -44,7 +44,7 @@ Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
                                              facilitiesOptions(std::move(other.facilitiesOptions))
 {
 }
-
+//destracor 
 Simulation::~Simulation()
 {
     for (BaseAction *action : actionsLog)
@@ -57,7 +57,7 @@ Simulation::~Simulation()
         delete sett;
     }
 }
-
+//assigment constructor אולי רק צריך מחיקה
 const Simulation &Simulation::operator=(const Simulation &other)
 {
     if (this == &other)
@@ -94,7 +94,7 @@ const Simulation &Simulation::operator=(const Simulation &other)
 
     return *this;
 }
-
+//move assigment operator אולי רק צריך מחיקה
 const Simulation &Simulation::operator=(Simulation &&other)
 {
     if (this == &other)
