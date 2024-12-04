@@ -325,7 +325,7 @@ void Close::act(Simulation &simulation)
     vector<Plan> plans = simulation.getPlans();
     for (const Plan &plan : plans)
     {
-        plan.toString();
+       cout << plan.toString() << endl;
     }
     simulation.close();
     // memort leak
