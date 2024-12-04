@@ -266,54 +266,102 @@ ChangePlanPolicy *ChangePlanPolicy::clone() const
 }
 // ChangePlanPolicy end ----------------------------------------
 
-PrintPlanStatus::PrintPlanStatus(int planId) : planId(planId) {
-    // Implementation (if needed)
+// PrintPlanStatus start --------------------------------------
+
+PrintPlanStatus::PrintPlanStatus(int planId): planId(planId){};
+
+void PrintPlanStatus::act(Simulation &simulation)
+{
+    bool found = false;
+    for (const Plan& plan : simulation.getPlans()) {
+        if (plan.getID() == this->planId) {
+            found = true;
+        }
+    }
+    if(!found)
+    {
+        throw std::runtime_error("Plan doesn't exist");
+    }
+
+    Plan planToPrint = simulation.getPlan(this->planId);
+    cout << "PlanID: " + planToPrint.getID() << endl;
+    cout << "SettlementName: " + planToPrint.getSettlement().getName();
+    cout << "PlanStatus: " planToPrint.printStatus();
+    cout << "SelectionPolicy: " + planToPrint.getSelectionPolicy();
+    cout << "LifeQualityScore: " + planToPrint.getlifeQualityScore();
+    cout << "EconomyScore: " + planToPrint.getEconomyScore();
+    cout << "EnvrionmentScore: " + planToPrint.getEnvironmentScore();
+    
+    // Loop through the facilities vector
+    for (const auto& facility : planToPrint.getFacilities()) {
+        cout << "FacilityName: " << facility->getName() + "/n";
+        cout << "FacilityStatus: " << "OPERATIONAL" << std::endl;
+    }
+    
+    // Loop through the underConstruction vector
+    std::cout << "Under Construction:" << std::endl;
+    for (const auto& facility : planToPrint.getUnderConstruction()) {
+        std::cout << "Name: " << facility->getName()
+                  << ", Status: " << "UNDER_CONSTRUCTIONS" << std::endl;
+    }   
 }
 
-void PrintPlanStatus::act(Simulation &simulation) {
-    // Implementation
-}
-
-PrintPlanStatus* PrintPlanStatus::clone() const {
+PrintPlanStatus* PrintPlanStatus::clone() const
+{
     return new PrintPlanStatus(*this);
 }
 
-const string PrintPlanStatus::toString() const {
-    return "PrintPlanStatus";
+const string PrintPlanStatus::toString() const
+{
+    return "Use the method act() to get the Plan Status by a given plan ID";
 }
 
-PrintActionsLog::PrintActionsLog()
-{
-    // Implementation
-}
+// PrintPlanStatus end --------------------------------------
+
+// PrintActionsLog start ------------------------------------
+
+PrintActionsLog::PrintActionsLog(){};
 
 void PrintActionsLog::act(Simulation &simulation)
 {
-    // Implementation
+    vector<BaseAction *> logs = simulation.getActionsLog();
+    //missing implimations
 }
 
-PrintActionsLog *PrintActionsLog::clone() const
+PrintActionsLog* PrintActionsLog::clone() const
 {
     return new PrintActionsLog(*this);
 }
 
 const string PrintActionsLog::toString() const
 {
-    return "";
+    return "Use the method act() to get the Plan actions log";
 }
 
-Close::Close() {
-    // Implementation (if needed)
+// PrintActionsLog end ------------------------------------
+
+//Close start ---------------------------------------------
+
+Close::Close(){};
+
+void Close::act(Simulation &simulation)
+{
+    vector<Plan> plans = simulation.getPlans();
+    for (const auto& plan : plans) {
+        plan.toStringFinish();
+    }
+    simulation.stopRunning();
+    //memort leak
+    //if need to close somting else
 }
 
-void Close::act(Simulation &simulation) {
-    // Implementation
-}
-
-Close* Close::clone() const {
+Close* Close::clone() const
+{
     return new Close(*this);
 }
 
-const string Close::toString() const {
-    return "Close";
+const string Close::toString() const
+{
+    return "Use the method act() to close the simulation";
 }
+//Close end -----------------------------------------------

@@ -63,6 +63,11 @@ const vector<Facility *> &Plan::getFacilities() const
     return facilities;
 }
 
+const vector<Facility *> &Plan::getUnderConstruction() const
+{
+    return underConstruction;
+}
+
 const int Plan::getID() const
 {
     return plan_id;
@@ -95,6 +100,15 @@ const string Plan::toString() const
            "The environment score is: " + to_string(environment_score) + "\n" +
            "The finished facilities are: " + printFacilities() + "\n" +
            "The unfinished are: " + printunfinishedFacilities() + "\n";
+}
+
+const string Plan::toStringFinish() const
+{
+    return "PlanID: " + to_string(plan_id) + "\n"
+            "SettlementName: " + settlement.getName() + "\n" +
+           "LifeQuality_Score:  " + to_string(life_quality_score) + "\n" +
+           "Economy_Score: " + to_string(economy_score) + "\n" +
+           "Environment _Score: " + to_string(environment_score);
 }
 
 const std::string Plan::printFacilities() const
@@ -133,6 +147,10 @@ const std::string Plan::printunfinishedFacilities() const
     return result;
 }
 
+const Settlement Plan::getSettlement() const
+{
+    return this->settlement;
+}
 void Plan::setSelectionPolicy(SelectionPolicy *selectionPolicy)
 {
     this->selectionPolicy = selectionPolicy;
@@ -148,12 +166,12 @@ void Plan::addFacility(Facility *facility)
     //check if the facility is already exists
     for (const Facility *builtFacility : this->facilities) {
         if (builtFacility && builtFacility->getName() == facility->getName()) { // Check if the facility exists and names match
-            throw std::runtime_error("“Facility already exists");    
+            throw std::runtime_error("Facility already exists");    
         }
     }
     for (const Facility *isbuiltFacility : this->underConstruction) {
         if (isbuiltFacility && isbuiltFacility->getName() == facility->getName()) { // Check if the facility exists and names match
-            throw std::runtime_error("“Facility is being built exists");    
+            throw std::runtime_error(“Facility is being built exists");    
         }
     }   
     if(this->status == PlanStatus::AVALIABLE)
@@ -220,3 +238,4 @@ void Plan::step()
     }
 
 }
+

@@ -26,13 +26,15 @@ public:
     void step();
     void printStatus();
     const vector<Facility *> &getFacilities() const;
+    const vector<Facility *> &getUnderConstruction() const;
     void addFacility(Facility *facility);
     const string toString() const;
+    const string toStringFinish() const;
     const SelectionPolicy& getSelectionPolicy() const;
     const int getID() const;
-
     const std::string printFacilities() const;
     const std::string printunfinishedFacilities() const;
+    const Settlement getSettlement() const;
 
 private:
     int plan_id;

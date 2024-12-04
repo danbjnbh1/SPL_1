@@ -28,12 +28,15 @@ public:
     bool isSettlementExists(const string &settlementName);
     bool isFacilityExists(const string &facilityName);
     bool isPlanExists(const int &planId) const;
+    vector<BaseAction *> getActionsLog() const;
+    vector<Plan> getPlans() const;
     Settlement &getSettlement(const string &settlementName);
     Plan &getPlan(const int planID);
     void step();
     void close();
     void open();
     void initSimulation(const string &configFilePath);
+    void stopRunning();
 
 private:
     bool isRunning;
