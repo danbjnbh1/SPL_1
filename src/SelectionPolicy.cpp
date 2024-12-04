@@ -1,4 +1,3 @@
-#pragma once
 #include <vector>
 #include "Facility.h"
 #include <map>
@@ -23,8 +22,13 @@ const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType>
             return facilitiesOptions[i];
         }
     }
+    
+    // Create and return a default FacilityType object
+    static FacilityType defaultFacility("", FacilityCategory::LIFE_QUALITY, 0, 0, 0, 0);
+    return defaultFacility;
 }
 
+ 
 const string EconomySelection ::toString() const
 {
     return "eco";
@@ -50,6 +54,9 @@ const FacilityType &SustainabilitySelection ::selectFacility(const vector<Facili
             return facilitiesOptions[i];
         }
     }
+    // Create and return a default FacilityType object
+    static FacilityType defaultFacility("", FacilityCategory::LIFE_QUALITY, 0, 0, 0, 0);
+    return defaultFacility;
 }
 
 const string SustainabilitySelection ::toString() const

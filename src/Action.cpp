@@ -29,10 +29,7 @@ ActionType getActionType(string &actionTypeStr)
 map<ActionStatus, string> actionStatusToString = {{ActionStatus::COMPLETED, "COMPLETED"}, {ActionStatus::ERROR, "ERROR"}};
 
 // BaseAction start --------------------------------------
-BaseAction::BaseAction()
-{
-    // Implementation
-}
+BaseAction::BaseAction(): errorMsg(""),status(ActionStatus::ERROR){}
 
 ActionStatus BaseAction::getStatus() const
 {
