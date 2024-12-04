@@ -31,25 +31,27 @@ Plan::Plan(
 Plan::Plan(const Plan &other)
     : plan_id(other.plan_id),
       settlement(other.settlement),  
-      selectionPolicy(other.selectionPolicy),  
+      selectionPolicy(),  
       status(other.status), 
-      facilities(other.facilities),  
-      underConstruction(other.underConstruction),  
+      facilities(),  // Default-initialize the vector
+      underConstruction(),  // Default-initialize the vector
       facilityOptions(other.facilityOptions),  
       life_quality_score(other.life_quality_score),  
       economy_score(other.economy_score),  
       environment_score(other.environment_score) 
 {
+    selectionPolicy = other.selectionPolicy->clone();
+    // Deep copy of facilities
     for (Facility *facility : other.facilities)
     {
         facilities.push_back(new Facility(*facility));
     }
 
+    // Deep copy of underConstruction
     for (Facility *facility : other.underConstruction)
     {
         underConstruction.push_back(new Facility(*facility));
     }
-
 }
 
 //distractor 
@@ -248,6 +250,9 @@ void Plan::step()
         // If the facility is now operational, move it to the facilities list
         if (status == FacilityStatus::OPERATIONAL)
         {
+            life_quality_score+=facility->getLifeQualityScore();
+            economy_score+=facility->getEconomyScore();
+            environment_score+=facility->getEnvironmentScore();
             facilities.push_back(facility);       // Add to operational facilities
             iter = underConstruction.erase(iter); // Remove from underConstruction list
         }
