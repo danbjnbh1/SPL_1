@@ -33,23 +33,24 @@ Plan::Plan(const Plan &other)
       settlement(other.settlement),  
       selectionPolicy(other.selectionPolicy),  
       status(other.status), 
-      facilities(other.facilities),  
-      underConstruction(other.underConstruction),  
+      facilities(),  // Default-initialize the vector
+      underConstruction(),  // Default-initialize the vector
       facilityOptions(other.facilityOptions),  
       life_quality_score(other.life_quality_score),  
       economy_score(other.economy_score),  
       environment_score(other.environment_score) 
 {
+    // Deep copy of facilities
     for (Facility *facility : other.facilities)
     {
         facilities.push_back(new Facility(*facility));
     }
 
+    // Deep copy of underConstruction
     for (Facility *facility : other.underConstruction)
     {
         underConstruction.push_back(new Facility(*facility));
     }
-
 }
 
 //distractor 
