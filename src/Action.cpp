@@ -272,15 +272,10 @@ PrintPlanStatus::PrintPlanStatus(int planId): planId(planId){};
 
 void PrintPlanStatus::act(Simulation &simulation)
 {
-    bool found = false;
-    for (const Plan& plan : simulation.getPlans()) {
-        if (plan.getID() == this->planId) {
-            found = true;
-        }
-    }
-    if(!found)
+    if(!simulation.isPlanExists(planId))
     {
-        throw std::runtime_error("Plan doesn't exist");
+        error("Plan doesn't exist");
+        return;
     }
 
     Plan planToPrint = simulation.getPlan(this->planId);
