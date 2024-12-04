@@ -36,7 +36,6 @@ public:
     void close();
     void open();
     void initSimulation(const string &configFilePath);
-    void stopRunning();
 
 private:
     bool isRunning;

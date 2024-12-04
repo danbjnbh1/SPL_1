@@ -332,11 +332,6 @@ vector<BaseAction *> Simulation::getActionsLog() const
     return actionsLog;
 }
 
-void Simulation::stopRunning()
-{
-    this->isRunning = false;
-}
-
 vector<Plan> Simulation::getPlans() const 
 {
     return this->plans;

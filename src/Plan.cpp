@@ -171,7 +171,7 @@ void Plan::addFacility(Facility *facility)
     }
     for (const Facility *isbuiltFacility : this->underConstruction) {
         if (isbuiltFacility && isbuiltFacility->getName() == facility->getName()) { // Check if the facility exists and names match
-            throw std::runtime_error(“Facility is being built exists");    
+            throw std::runtime_error("Facility is being built exists");    
         }
     }   
     if(this->status == PlanStatus::AVALIABLE)
