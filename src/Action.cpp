@@ -286,7 +286,7 @@ void PrintPlanStatus::act(Simulation &simulation)
     Plan planToPrint = simulation.getPlan(this->planId);
     cout << "PlanID: " + planToPrint.getID() << endl;
     cout << "SettlementName: " + planToPrint.getSettlement().getName();
-    cout << "PlanStatus: " planToPrint.printStatus();
+    cout << "PlanStatus: " + planToPrint.printStatus();
     cout << "SelectionPolicy: " + planToPrint.getSelectionPolicy();
     cout << "LifeQualityScore: " + planToPrint.getlifeQualityScore();
     cout << "EconomyScore: " + planToPrint.getEconomyScore();

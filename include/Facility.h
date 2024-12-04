@@ -20,8 +20,8 @@ enum class FacilityCategory
     ENVIRONMENT,
 };
 
-// map<FacilityCategory, string> facilityCategoryToString;
-// map<FacilityStatus, string> facilityStatusToString;
+extern map<FacilityCategory, string> facilityCategoryToString;
+extern map<FacilityStatus, string> facilityStatusToString;
 
 class FacilityType
 {
