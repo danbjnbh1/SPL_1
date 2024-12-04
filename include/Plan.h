@@ -35,6 +35,7 @@ public:
     const std::string printFacilities() const;
     const std::string printunfinishedFacilities() const;
     const Settlement getSettlement() const;
+    void updateStatus();
 
 private:
     int plan_id;

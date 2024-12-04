@@ -327,7 +327,7 @@ void Close::act(Simulation &simulation)
     for (const auto& plan : plans) {
         plan.toStringFinish();
     }
-    simulation.stopRunning();
+    simulation.close();
     //memort leak
     //if need to close somting else
 }
