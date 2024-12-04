@@ -3,21 +3,9 @@
 #include <Facility.h>
 #include <Settlement.h>
 
-//-------------------------
-// tests includes
-#include "Facility.h"
-//-------------------------
-
 using namespace std;
 
 Simulation *backup = nullptr;
-
-void facilityTest()
-{
-    Facility *fac1 = new Facility("Fac1", "Set1", FacilityCategory::ENVIRONMENT, 2, 2, 2, 2);
-    string s = fac1->toString();
-    cout << s << endl;
-}
 
 int main(int argc, char **argv)
 {
@@ -29,7 +17,6 @@ int main(int argc, char **argv)
     }
     
     string configurationFile = argv[1];
-    cout << configurationFile + " this is the file path" << endl;
     Simulation simulation(configurationFile);
     simulation.start();
   
@@ -38,11 +25,6 @@ int main(int argc, char **argv)
         delete backup;
         backup = nullptr;
     }
-
-    facilityTest();
-    cout << "Test print" << endl;
-    Settlement *s = new Settlement("dadush", SettlementType::METROPOLIS);
-    cout << s->toString() << endl;
 
     return 0;
 }

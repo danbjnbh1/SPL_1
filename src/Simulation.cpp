@@ -154,9 +154,6 @@ void Simulation::initSimulation(const string &configFilePath)
 
             SelectionPolicy *selectionPolicy = createPolicyByName(lineArgs[2]);
 
-            cout << settlement.toString() << endl;
-            cout << selectionPolicy->toString() << endl;
-
             Plan plan(planCounter++, settlement, selectionPolicy, facilitiesOptions);
             plans.push_back(plan);
         }
