@@ -3,13 +3,12 @@
 #include <map>
 #include <iostream>
 #include <string>
-//#include "Facility.h"
+// #include "Facility.h"
 #include "Settlement.h"
 #include "SelectionPolicy.h"
 #include "Plan.h"
 using std::vector;
 using namespace std;
-
 
 map<PlanStatus, string> planStatusToString = {{PlanStatus::AVALIABLE, "AVALIABLE"}, {PlanStatus::BUSY, "BUSY"}};
 
@@ -78,20 +77,22 @@ void Plan::printStatus()
     cout << "PlanID: " + this->plan_id << endl;
     cout << "SettlementName: " + this->getSettlement().getName();
     cout << "PlanStatus: " + planStatusToString[this->status];
-    cout << "SelectionPolicy: " +  this->getSelectionPolicy().toString();
+    cout << "SelectionPolicy: " + this->getSelectionPolicy().toString();
     cout << "LifeQualityScore: " + this->getlifeQualityScore();
     cout << "EconomyScore: " + this->getEconomyScore();
     cout << "EnvrionmentScore: " + this->getEnvironmentScore();
-    
+
     // Loop through the facilities vector
-    for (const auto& facility : this->getFacilities()) {
+    for (const auto &facility : this->getFacilities())
+    {
         cout << "FacilityName: " << facility->getName() + "/n";
         cout << "FacilityStatus: " << "OPERATIONAL" << std::endl;
     }
-    
+
     // Loop through the underConstruction vector
     std::cout << "Under Construction:" << std::endl;
-    for (const auto& facility : this->getUnderConstruction()) {
+    for (const auto &facility : this->getUnderConstruction())
+    {
         std::cout << "Name: " << facility->getName()
                   << ", Status: " << "UNDER_CONSTRUCTIONS" << std::endl;
     }
@@ -125,7 +126,8 @@ const string Plan::toString() const
 const string Plan::toStringFinish() const
 {
     return "PlanID: " + to_string(plan_id) + "\n"
-            "SettlementName: " + settlement.getName() + "\n" +
+                                             "SettlementName: " +
+           settlement.getName() + "\n" +
            "LifeQuality_Score:  " + to_string(life_quality_score) + "\n" +
            "Economy_Score: " + to_string(economy_score) + "\n" +
            "Environment _Score: " + to_string(environment_score);
@@ -183,18 +185,22 @@ const SelectionPolicy &Plan::getSelectionPolicy() const
 
 void Plan::addFacility(Facility *facility)
 {
-    //check if the facility is already exists
-    for (const Facility *builtFacility : this->facilities) {
-        if (builtFacility && builtFacility->getName() == facility->getName()) { // Check if the facility exists and names match
-            throw std::runtime_error("Facility already exists");    
+    // check if the facility is already exists
+    for (const Facility *builtFacility : this->facilities)
+    {
+        if (builtFacility && builtFacility->getName() == facility->getName())
+        { // Check if the facility exists and names match
+            throw std::runtime_error("Facility already exists");
         }
     }
-    for (const Facility *isbuiltFacility : this->underConstruction) {
-        if (isbuiltFacility && isbuiltFacility->getName() == facility->getName()) { // Check if the facility exists and names match
-            throw std::runtime_error("Facility is being built exists");    
+    for (const Facility *isbuiltFacility : this->underConstruction)
+    {
+        if (isbuiltFacility && isbuiltFacility->getName() == facility->getName())
+        { // Check if the facility exists and names match
+            throw std::runtime_error("Facility is being built exists");
         }
-    }   
-    if(this->status == PlanStatus::AVALIABLE)
+    }
+    if (this->status == PlanStatus::AVALIABLE)
     {
         underConstruction.push_back(facility);
         int sizeOfUnderConstruction = underConstruction.size();
@@ -213,18 +219,21 @@ void Plan::addFacility(Facility *facility)
 void Plan::step()
 {
 
-    for (auto it = underConstruction.begin(); it != underConstruction.end(); ) {
+    for (auto it = underConstruction.begin(); it != underConstruction.end();)
+    {
         Facility *facility = *it;
 
         // Advance the facility's construction status
         FacilityStatus status = facility->step();
 
         // If the facility is now operational, move it to the facilities list
-        if (status == FacilityStatus::OPERATIONAL) {
-            facilities.push_back(facility);       // Add to operational facilities
-            it = underConstruction.erase(it);    // Remove from underConstruction list
-        } 
-        else {
+        if (status == FacilityStatus::OPERATIONAL)
+        {
+            facilities.push_back(facility);   // Add to operational facilities
+            it = underConstruction.erase(it); // Remove from underConstruction list
+        }
+        else
+        {
             ++it; // Move to the next facility
         }
     }
@@ -233,29 +242,18 @@ void Plan::step()
     const Settlement &sett = this->settlement;
     SettlementType type = sett.getType();
 
-    // Check the settlement type and update the plan's status accordingly
-    switch (type) {
-        case SettlementType::VILLAGE:
-            if (this->underConstruction.size() < 1) {
-                this->status = PlanStatus::AVALIABLE; // Update status to AVAILABLE if criteria met
-            }
-            break;
-
-        case SettlementType::CITY:
-            if (this->underConstruction.size() < 2) {
-                this->status = PlanStatus::AVALIABLE; // Update status to AVAILABLE if criteria met
-            }
-            break;
-
-        case SettlementType::METROPOLIS:
-            if (this->underConstruction.size() < 3) {
-                this->status = PlanStatus::AVALIABLE; // Update status to AVAILABLE if criteria met
-            }
-            break;
-
-        default:
-            std::cerr << "Unknown SettlementType" << std::endl; // Handle unexpected settlement types
-    }
-
+    updateStatus();
 }
 
+void Plan::updateStatus()
+{
+    const int maxUnderConstruction = static_cast<int>(this->settlement.getType()) + 1;
+    if (this->underConstruction.size() == maxUnderConstruction)
+    {
+        this->status = PlanStatus::BUSY;
+    }
+    else
+    {
+        this->status = PlanStatus::AVALIABLE;
+    }
+}
