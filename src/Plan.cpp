@@ -74,13 +74,13 @@ const int Plan::getID() const
 
 void Plan::printStatus()
 {
-    cout << "PlanID: " + this->plan_id << endl;
-    cout << "SettlementName: " + this->getSettlement().getName();
+    cout << "PlanID: " + plan_id << endl;
+    cout << "SettlementName: " + getSettlement().getName();
     cout << "PlanStatus: " + planStatusToString[this->status];
-    cout << "SelectionPolicy: " + this->getSelectionPolicy().toString();
-    cout << "LifeQualityScore: " + this->getlifeQualityScore();
-    cout << "EconomyScore: " + this->getEconomyScore();
-    cout << "EnvrionmentScore: " + this->getEnvironmentScore();
+    cout << "SelectionPolicy: " + selectionPolicy->toString();
+    cout << "LifeQualityScore: " + to_string(life_quality_score);
+    cout << "EconomyScore: " + to_string(economy_score);
+    cout << "EnvrionmentScore: " + to_string(environment_score);
 
     // Loop through the facilities vector
     for (const auto &facility : this->getFacilities())
@@ -230,16 +230,12 @@ void Plan::step()
         }
     }
 
-    // Get the settlement type of the current plan
-    const Settlement &sett = this->settlement;
-    SettlementType type = sett.getType();
-
     updateStatus();
 }
 
 void Plan::updateStatus()
 {
-    const int maxUnderConstruction = static_cast<int>(this->settlement.getType()) + 1;
+    const int maxUnderConstruction = static_cast<int>(settlement.getType()) + 1;
     if (underConstruction.size() == maxUnderConstruction)
     {
         status = PlanStatus::BUSY;
