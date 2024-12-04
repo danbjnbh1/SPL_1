@@ -59,7 +59,11 @@ SimulateStep::SimulateStep(const int numOfSteps) : numOfSteps(numOfSteps) {}
 
 void SimulateStep::act(Simulation &simulation)
 {
-    simulation.step();
+    cout << numOfSteps << endl;
+    for (int i = 0; i < numOfSteps; i++)
+    {
+        simulation.step();
+    }
     complete();
 }
 

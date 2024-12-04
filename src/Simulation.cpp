@@ -154,6 +154,9 @@ void Simulation::initSimulation(const string &configFilePath)
 
             SelectionPolicy *selectionPolicy = createPolicyByName(lineArgs[2]);
 
+            cout << settlement.toString() << endl;
+            cout << selectionPolicy->toString() << endl;
+
             Plan plan(planCounter++, settlement, selectionPolicy, facilitiesOptions);
             plans.push_back(plan);
         }
@@ -293,7 +296,7 @@ Settlement &Simulation::getSettlement(const string &settlementName)
 
 bool Simulation::isPlanExists(const int &planId) const
 {
-    for (Plan plan : plans)
+    for (const Plan &plan : plans)
     {
         if (plan.getID() == planId)
         {
@@ -317,10 +320,9 @@ Plan &Simulation::getPlan(const int planID)
     throw std::runtime_error("Plan not found");
 }
 
-
 void Simulation::step()
 {
-    for (Plan plan : plans)
+    for (Plan &plan : plans)
     {
         plan.step();
     }
