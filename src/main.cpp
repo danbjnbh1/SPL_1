@@ -31,8 +31,6 @@ int main(int argc, char **argv)
     string configurationFile = argv[1];
     cout << configurationFile + " this is the file path" << endl;
     Simulation simulation(configurationFile);
-    cout << "ok" << endl;
-    
     simulation.start();
 /*  
     if (backup != nullptr)
@@ -45,7 +43,8 @@ int main(int argc, char **argv)
     cout << "Test print" << endl;
     Settlement *s = new Settlement("dadush", SettlementType::METROPOLIS);
     cout << s->toString() << endl;
-    
-*/
+
+
     return 0;
+    */
 }

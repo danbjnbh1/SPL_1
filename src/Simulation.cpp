@@ -17,7 +17,7 @@ Simulation::Simulation(const string &configFilePath) : isRunning(false),
 {
     initSimulation(configFilePath);
 }
-//copy constructor
+// copy constructor
 Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
                                                   planCounter(other.planCounter),
                                                   actionsLog(),
@@ -35,7 +35,7 @@ Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
         settlements.push_back(new Settlement(*sett));
     }
 }
-//move copy construcor 
+// move copy construcor
 Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
                                              planCounter(other.planCounter),
                                              actionsLog(std::move(other.actionsLog)),
@@ -44,7 +44,7 @@ Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
                                              facilitiesOptions(std::move(other.facilitiesOptions))
 {
 }
-//destracor 
+// destracor
 Simulation::~Simulation()
 {
     for (BaseAction *action : actionsLog)
@@ -57,7 +57,7 @@ Simulation::~Simulation()
         delete sett;
     }
 }
-//assigment constructor אולי רק צריך מחיקה
+// assigment constructor אולי רק צריך מחיקה
 const Simulation &Simulation::operator=(const Simulation &other)
 {
     if (this == &other)
@@ -94,7 +94,7 @@ const Simulation &Simulation::operator=(const Simulation &other)
 
     return *this;
 }
-//move assigment operator אולי רק צריך מחיקה
+// move assigment operator אולי רק צריך מחיקה
 const Simulation &Simulation::operator=(Simulation &&other)
 {
     if (this == &other)
@@ -137,6 +137,7 @@ void Simulation::initSimulation(const string &configFilePath)
         }
 
         vector<string> lineArgs = Auxiliary::parseArguments(line);
+
         if (lineArgs[0] == "settlement")
         {
             Settlement *sett = new Settlement(lineArgs[1], static_cast<SettlementType>(stoi(lineArgs[2])));
@@ -150,7 +151,8 @@ void Simulation::initSimulation(const string &configFilePath)
         else if (lineArgs[0] == "plan")
         {
             Settlement &settlement = getSettlement(lineArgs[1]);
-            SelectionPolicy *selectionPolicy = createPolicyByName(lineArgs[1]);
+
+            SelectionPolicy *selectionPolicy = createPolicyByName(lineArgs[2]);
 
             Plan plan(planCounter++, settlement, selectionPolicy, facilitiesOptions);
             plans.push_back(plan);
@@ -327,7 +329,7 @@ void Simulation::step()
 void Simulation::open()
 {
     isRunning = true;
-    cout << "The simulation has started";
+    cout << "The simulation has started\n";
 }
 
 void Simulation::close()
@@ -340,7 +342,7 @@ vector<BaseAction *> Simulation::getActionsLog() const
     return actionsLog;
 }
 
-vector<Plan> Simulation::getPlans() const 
+vector<Plan> Simulation::getPlans() const
 {
     return this->plans;
 }
