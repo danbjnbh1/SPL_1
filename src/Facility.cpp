@@ -7,7 +7,7 @@ map<FacilityCategory, string> facilityCategoryToString = {{FacilityCategory::ECO
                                                           {FacilityCategory::LIFE_QUALITY, "LIFE_QUALITY"}};
 
 map<FacilityStatus, string> facilityStatusToString = {{FacilityStatus::OPERATIONAL, "OPERATIONAL"},
-                                                      {FacilityStatus::UNDER_CONSTRUCTIONS, "Environment"}};
+                                                      {FacilityStatus::UNDER_CONSTRUCTIONS, "UNDER_CONSTRUCTIONS"}};
 
 FacilityType::FacilityType(
     const string &name,
@@ -99,5 +99,5 @@ const FacilityStatus &Facility::getStatus() const
 const string Facility::toString() const
 {
     return "facilityName: " + name + "\n" +
-           "facilityCategory: " + facilityCategoryToString[category];
+           "facilityStatus: " + facilityStatusToString[status];
 }

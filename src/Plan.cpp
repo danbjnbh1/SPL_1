@@ -122,13 +122,13 @@ void Plan::printStatus()
     // Print finished facilities
     for (Facility *facility : facilities)
     {
-        facility->toString();
+        cout << facility->toString() << endl;
     }
 
     // Print underConstruction facilities
     for (Facility *facility : underConstruction)
     {
-        facility->toString();
+        cout << facility->toString() << endl;
     }
 }
 
@@ -140,7 +140,7 @@ const string Plan::toString() const
            "SelectionPolicy: " + selectionPolicy->toString() + "\n" +
            "LifeQualityScore: " + to_string(life_quality_score) + "\n" +
            "EconomyScore: " + to_string(economy_score) + "\n" +
-           "EnvironmentScore: " + to_string(environment_score) + "\n";
+           "EnvironmentScore: " + to_string(environment_score);
 }
 
 const Settlement Plan::getSettlement() const
@@ -203,8 +203,8 @@ void Plan::step()
 
 void Plan::updateStatus()
 {
-    const int maxUnderConstruction = static_cast<int>(settlement.getType()) + 1;
-    if (underConstruction.size() == static_cast<size_t>(maxUnderConstruction))
+    const size_t maxUnderConstruction = static_cast<size_t>(settlement.getType()) + 1;
+    if (underConstruction.size() >= maxUnderConstruction)
     {
         status = PlanStatus::BUSY;
     }

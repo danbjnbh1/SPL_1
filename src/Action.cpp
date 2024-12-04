@@ -258,7 +258,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
 
 const string ChangePlanPolicy::toString() const
 {
-    return "changePolicy" + to_string(planId) + newPolicy;
+    return "changePolicy" + to_string(planId) + newPolicy + actionStatusToString[getStatus()];
 }
 
 ChangePlanPolicy *ChangePlanPolicy::clone() const
@@ -288,9 +288,10 @@ PrintPlanStatus *PrintPlanStatus::clone() const
     return new PrintPlanStatus(*this);
 }
 
+// TODO:OR example
 const string PrintPlanStatus::toString() const
 {
-    return "Use the method act() to get the Plan Status by a given plan ID";
+    return "planStatus" + to_string(planId) + actionStatusToString[getStatus()];
 }
 
 // PrintPlanStatus end --------------------------------------
