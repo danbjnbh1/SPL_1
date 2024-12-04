@@ -284,26 +284,8 @@ void PrintPlanStatus::act(Simulation &simulation)
     }
 
     Plan planToPrint = simulation.getPlan(this->planId);
-    cout << "PlanID: " + planToPrint.getID() << endl;
-    cout << "SettlementName: " + planToPrint.getSettlement().getName();
-    cout << "PlanStatus: " + planToPrint.printStatus();
-    cout << "SelectionPolicy: " + planToPrint.getSelectionPolicy();
-    cout << "LifeQualityScore: " + planToPrint.getlifeQualityScore();
-    cout << "EconomyScore: " + planToPrint.getEconomyScore();
-    cout << "EnvrionmentScore: " + planToPrint.getEnvironmentScore();
-    
-    // Loop through the facilities vector
-    for (const auto& facility : planToPrint.getFacilities()) {
-        cout << "FacilityName: " << facility->getName() + "/n";
-        cout << "FacilityStatus: " << "OPERATIONAL" << std::endl;
-    }
-    
-    // Loop through the underConstruction vector
-    std::cout << "Under Construction:" << std::endl;
-    for (const auto& facility : planToPrint.getUnderConstruction()) {
-        std::cout << "Name: " << facility->getName()
-                  << ", Status: " << "UNDER_CONSTRUCTIONS" << std::endl;
-    }   
+    planToPrint.printStatus();
+       
 }
 
 PrintPlanStatus* PrintPlanStatus::clone() const
