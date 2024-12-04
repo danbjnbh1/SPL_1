@@ -20,8 +20,8 @@ public:
     Plan(const Plan &other);
     Plan(Plan &&other);
     ~Plan();
-    const Plan& operator=(const Plan& other);
-    const Plan& operator=(Plan&& other);
+    const Plan& operator=(const Plan& other) = delete;
+    const Plan& operator=(Plan&& other) = delete;
 
     const int getlifeQualityScore() const;
     const int getEconomyScore() const;
