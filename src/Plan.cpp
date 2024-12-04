@@ -249,6 +249,9 @@ void Plan::step()
         // If the facility is now operational, move it to the facilities list
         if (status == FacilityStatus::OPERATIONAL)
         {
+            life_quality_score+=facility->getLifeQualityScore();
+            economy_score+=facility->getEconomyScore();
+            environment_score+=facility->getEnvironmentScore();
             facilities.push_back(facility);       // Add to operational facilities
             iter = underConstruction.erase(iter); // Remove from underConstruction list
         }
