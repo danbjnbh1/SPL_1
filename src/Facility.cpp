@@ -61,17 +61,9 @@ Facility::Facility(
     const int lifeQuality_score,
     const int economy_score,
     const int environment_score) : FacilityType(name, category, price, lifeQuality_score, economy_score, environment_score),
-                                   settlementName(settlementName)
-{
-    status = FacilityStatus::UNDER_CONSTRUCTIONS;
-    timeLeft = price;
-}
+                                   settlementName(settlementName), status(FacilityStatus::UNDER_CONSTRUCTIONS), timeLeft(price){};
 Facility::
-    Facility(const FacilityType &type, const string &settlementName) : FacilityType(type), settlementName(settlementName)
-{
-    status = FacilityStatus::UNDER_CONSTRUCTIONS;
-    timeLeft = type.getCost();
-}
+    Facility(const FacilityType &type, const string &settlementName) : FacilityType(type), settlementName(settlementName), status(FacilityStatus::UNDER_CONSTRUCTIONS), timeLeft(price){};
 
 const string &Facility::getSettlementName() const
 {
