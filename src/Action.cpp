@@ -325,8 +325,8 @@ void Close::act(Simulation &simulation)
        cout << plan.toString() << endl;
     }
     simulation.close();
-    // memort leak
-    // if need to close somting else
+    // memort leak 
+
 }
 
 Close *Close::clone() const
