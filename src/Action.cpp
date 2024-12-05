@@ -165,7 +165,7 @@ void BackupSimulation::act(Simulation &simulation)
 
 const string BackupSimulation::toString() const
 {
-    return "backup";
+    return "backup" + actionStatusToString[getStatus()];
 }
 
 BackupSimulation *BackupSimulation::clone() const
@@ -188,7 +188,7 @@ void RestoreSimulation::act(Simulation &simulation)
 
 const string RestoreSimulation::toString() const
 {
-    return "restore";
+    return "restore" + actionStatusToString[getStatus()];
 }
 
 RestoreSimulation *RestoreSimulation::clone() const
@@ -201,7 +201,7 @@ RestoreSimulation *RestoreSimulation::clone() const
 AddSettlement::AddSettlement(const string &settlementName, SettlementType settlementType) : settlementName(settlementName), settlementType(settlementType) {};
 const string AddSettlement::toString() const
 {
-    return "settlement" + settlementName + to_string(static_cast<int>(settlementType)) + actionStatusToString[getStatus()];
+    return "Add Settlement" + settlementName + to_string(static_cast<int>(settlementType)) + actionStatusToString[getStatus()];
 };
 
 void AddSettlement::act(Simulation &simulation)
@@ -257,7 +257,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
 
 const string ChangePlanPolicy::toString() const
 {
-    return "changePolicy" + to_string(planId) + newPolicy + actionStatusToString[getStatus()];
+    return "Change Policy" + to_string(planId) + newPolicy + actionStatusToString[getStatus()];
 }
 
 ChangePlanPolicy *ChangePlanPolicy::clone() const
@@ -287,7 +287,7 @@ PrintPlanStatus *PrintPlanStatus::clone() const
     return new PrintPlanStatus(*this);
 }
 
-// TODO:OR example
+
 const string PrintPlanStatus::toString() const
 {
     return "planStatus" + to_string(planId) + actionStatusToString[getStatus()];
@@ -302,7 +302,9 @@ PrintActionsLog::PrintActionsLog() {};
 void PrintActionsLog::act(Simulation &simulation)
 {
     vector<BaseAction *> logs = simulation.getActionsLog();
-    // missing implimations
+    for (const auto &log : logs) {
+        log->toString();
+    }
 }
 
 PrintActionsLog *PrintActionsLog::clone() const
@@ -312,7 +314,7 @@ PrintActionsLog *PrintActionsLog::clone() const
 
 const string PrintActionsLog::toString() const
 {
-    return "Use the method act() to get the Plan actions log";
+    return "Print Action Logs " + actionStatusToString[getStatus()];
 }
 
 // PrintActionsLog end ------------------------------------
@@ -338,6 +340,7 @@ Close *Close::clone() const
 
 const string Close::toString() const
 {
-    return "Use the method act() to close the simulation";
+
+    return "Close " + actionStatusToString[getStatus()];
 }
 // Close end -----------------------------------------------
