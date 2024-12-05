@@ -29,7 +29,7 @@ ActionType getActionType(string &actionTypeStr)
 map<ActionStatus, string> actionStatusToString = {{ActionStatus::COMPLETED, "COMPLETED"}, {ActionStatus::ERROR, "ERROR"}};
 
 // BaseAction start --------------------------------------
-BaseAction::BaseAction(): errorMsg(""),status(ActionStatus::ERROR){}
+BaseAction::BaseAction() : errorMsg(""), status(ActionStatus::ERROR) {}
 
 ActionStatus BaseAction::getStatus() const
 {
@@ -59,7 +59,6 @@ SimulateStep::SimulateStep(const int numOfSteps) : numOfSteps(numOfSteps) {}
 
 void SimulateStep::act(Simulation &simulation)
 {
-    cout << numOfSteps << endl;
     for (int i = 0; i < numOfSteps; i++)
     {
         simulation.step();
@@ -327,11 +326,9 @@ void Close::act(Simulation &simulation)
     vector<Plan> plans = simulation.getPlans();
     for (const Plan &plan : plans)
     {
-       cout << plan.toString() << endl;
+        cout << plan.toString() << endl;
     }
     simulation.close();
-    // memort leak 
-
 }
 
 Close *Close::clone() const

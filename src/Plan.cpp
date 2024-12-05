@@ -26,7 +26,6 @@ Plan::Plan(
       economy_score(0),  
       environment_score(0){}; 
       
-
 //copy Constructor
 Plan::Plan(const Plan &other)
     : plan_id(other.plan_id),
@@ -48,6 +47,33 @@ Plan::Plan(const Plan &other)
     }
 
     // Deep copy of underConstruction
+    for (Facility *facility : other.underConstruction)
+    {
+        underConstruction.push_back(new Facility(*facility));
+    }
+}
+
+
+//copy Constructor with settlement reference
+Plan::Plan(const Plan &other, Settlement& settlement)
+    : plan_id(other.plan_id),
+      settlement(settlement),  
+      selectionPolicy(),  
+      status(other.status), 
+      facilities(),
+      underConstruction(),
+      facilityOptions(other.facilityOptions),  
+      life_quality_score(other.life_quality_score),  
+      economy_score(other.economy_score),  
+      environment_score(other.environment_score) 
+{
+    selectionPolicy = other.selectionPolicy->clone();
+
+    for (Facility *facility : other.facilities)
+    {
+        facilities.push_back(new Facility(*facility));
+    }
+
     for (Facility *facility : other.underConstruction)
     {
         underConstruction.push_back(new Facility(*facility));

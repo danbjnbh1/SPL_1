@@ -18,6 +18,7 @@ class Plan
 public:
     Plan(const int planId, const Settlement &settlement, SelectionPolicy *selectionPolicy, const vector<FacilityType> &facilityOptions);
     Plan(const Plan &other);
+    Plan(const Plan &other, Settlement &settlement);
     Plan(Plan &&other);
     ~Plan();
     const Plan& operator=(const Plan& other) = delete;

@@ -21,7 +21,7 @@ Simulation::Simulation(const string &configFilePath) : isRunning(false),
 Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
                                                   planCounter(other.planCounter),
                                                   actionsLog(),
-                                                  plans(other.plans),
+                                                  plans(),
                                                   settlements(),
                                                   facilitiesOptions(other.facilitiesOptions)
 {
@@ -34,8 +34,17 @@ Simulation::Simulation(const Simulation &other) : isRunning(other.isRunning),
     {
         settlements.push_back(new Settlement(*sett));
     }
+
+    for (const Plan &plan : other.plans)
+    {
+        getSettlement(plan.getSettlement().getName());
+
+        // Find the corresponding copied settlement
+        Settlement &copiedSettlement = getSettlement(plan.getSettlement().getName());
+        plans.push_back(Plan(plan, copiedSettlement));
+    }
 }
-// move copy construcor
+// move copy constructor
 Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
                                              planCounter(other.planCounter),
                                              actionsLog(std::move(other.actionsLog)),
@@ -44,7 +53,7 @@ Simulation::Simulation(Simulation &&other) : isRunning(other.isRunning),
                                              facilitiesOptions(std::move(other.facilitiesOptions))
 {
 }
-// destracor
+// destructor
 Simulation::~Simulation()
 {
     for (BaseAction *action : actionsLog)
@@ -57,7 +66,7 @@ Simulation::~Simulation()
         delete sett;
     }
 }
-// assigment constructor אולי רק צריך מחיקה
+// assignment operator אולי רק צריך מחיקה
 const Simulation &Simulation::operator=(const Simulation &other)
 {
     if (this == &other)
@@ -94,7 +103,7 @@ const Simulation &Simulation::operator=(const Simulation &other)
 
     return *this;
 }
-// move assigment operator אולי רק צריך מחיקה
+// move assignment operator אולי רק צריך מחיקה
 const Simulation &Simulation::operator=(Simulation &&other)
 {
     if (this == &other)
@@ -165,6 +174,7 @@ void Simulation::start()
     open();
     while (isRunning)
     {
+        cout << "\n";
         string userInput;
         getline(cin, userInput);
         vector<string> parsedAction = Auxiliary::parseArguments(userInput);
@@ -230,7 +240,7 @@ void Simulation::addPlan(const Settlement &settlement, SelectionPolicy *selectio
 
 void Simulation::addAction(BaseAction *action)
 {
-    actionsLog.push_back(action->clone());
+    actionsLog.push_back(action);
 }
 
 bool Simulation::addSettlement(Settlement *settlement)
@@ -328,7 +338,7 @@ void Simulation::step()
 void Simulation::open()
 {
     isRunning = true;
-    cout << "The simulation has started\n";
+    cout << "The simulation has started";
 }
 
 void Simulation::close()

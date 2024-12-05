@@ -15,20 +15,17 @@ const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType>
 {
     int size = facilitiesOptions.size();
 
-    for (int i = lastSelectedIndex; i < size; i = (i + 1) % size)
+    for (int i = lastSelectedIndex + 1; i < size; i = (i + 1) % size)
     {
-        if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
+        if (facilitiesOptions[i].getCategory() == FacilityCategory::ECONOMY)
         {
             return facilitiesOptions[i];
         }
     }
-    
-    // Create and return a default FacilityType object
-    static FacilityType defaultFacility("", FacilityCategory::LIFE_QUALITY, 0, 0, 0, 0);
-    return defaultFacility;
+
+    throw runtime_error("No facility found for the given policy");
 }
 
- 
 const string EconomySelection ::toString() const
 {
     return "eco";
@@ -47,16 +44,15 @@ const FacilityType &SustainabilitySelection ::selectFacility(const vector<Facili
 {
     int size = facilitiesOptions.size();
 
-    for (int i = lastSelectedIndex; i < size; i = (i + 1) % size)
+    for (int i = lastSelectedIndex + 1; i < size; i = (i + 1) % size)
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
             return facilitiesOptions[i];
         }
     }
-    // Create and return a default FacilityType object
-    static FacilityType defaultFacility("", FacilityCategory::LIFE_QUALITY, 0, 0, 0, 0);
-    return defaultFacility;
+
+    throw runtime_error("No facility found for the given policy");
 }
 
 const string SustainabilitySelection ::toString() const
@@ -75,7 +71,7 @@ NaiveSelection::NaiveSelection() : lastSelectedIndex(-1)
 
 const FacilityType &NaiveSelection::selectFacility(const vector<FacilityType> &facilitiesOptions)
 {
-    lastSelectedIndex = lastSelectedIndex % facilitiesOptions.size();
+    lastSelectedIndex = (lastSelectedIndex + 1) % facilitiesOptions.size();
     return facilitiesOptions[lastSelectedIndex];
 }
 
@@ -106,13 +102,14 @@ const FacilityType &BalancedSelection::selectFacility(const vector<FacilityType>
 {
     int minBalanceScore = INT_MAX;
     int resultInx = 0;
-    for (size_t i = 0; i < facilitiesOptions.size(); ++i)
+    for (size_t i = 0; i < facilitiesOptions.size(); i++)
     {
         const FacilityType &facility = facilitiesOptions[i];
 
         // Calculate balance score for each facility
-        int balanceScore = max(LifeQualityScore + facility.getLifeQualityScore(), max(EconomyScore + facility.getEconomyScore(),
-                                                                                      EnvironmentScore + facility.getEnvironmentScore())) -
+        int balanceScore = max(LifeQualityScore + facility.getLifeQualityScore(),
+                               max(EconomyScore + facility.getEconomyScore(),
+                                   EnvironmentScore + facility.getEnvironmentScore())) -
                            min(LifeQualityScore + facility.getLifeQualityScore(),
                                min(EconomyScore + facility.getEconomyScore(),
                                    EnvironmentScore + facility.getEnvironmentScore()));
@@ -126,7 +123,7 @@ const FacilityType &BalancedSelection::selectFacility(const vector<FacilityType>
 
     const FacilityType &choosenFacility = facilitiesOptions[resultInx];
 
-    EnvironmentScore = EnvironmentScore + choosenFacility.getEconomyScore();
+    EnvironmentScore = EnvironmentScore + choosenFacility.getEnvironmentScore();
     EconomyScore = EconomyScore + choosenFacility.getEconomyScore();
     LifeQualityScore = LifeQualityScore + choosenFacility.getLifeQualityScore();
 
