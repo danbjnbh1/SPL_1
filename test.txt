@@ -11,7 +11,7 @@ valgrind --leak-check=full --show-reachable=yes bin/simulation config_file.txt
     # PrintPlanStatus - error if:
         plan id doest exists
 
-    # ChangePlanPolicy - error if:
+V   # ChangePlanPolicy - error if:
         the previous policy is the same as the desired one
         the planID doesn’t exist
 

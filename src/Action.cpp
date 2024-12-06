@@ -244,8 +244,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
         return;
     }
 
-    SelectionPolicy *newSelectionPolicy;
-    newSelectionPolicy = createPolicyByName(newPolicy, plan.getlifeQualityScore(), plan.getEconomyScore(), plan.getEnvironmentScore());
+    SelectionPolicy *newSelectionPolicy = createPolicyByName(newPolicy, plan.getlifeQualityScore(), plan.getEconomyScore(), plan.getEnvironmentScore());
 
     if (newSelectionPolicy == nullptr)
     {
@@ -259,7 +258,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
 
 const string ChangePlanPolicy::toString() const
 {
-    return "ChangePlanPolicy " + to_string(planId) + " " +  newPolicy + " " + actionStatusToString[getStatus()];
+    return "ChangePlanPolicy " + to_string(planId) + " " + newPolicy + " " + actionStatusToString[getStatus()];
 }
 
 ChangePlanPolicy *ChangePlanPolicy::clone() const
@@ -318,7 +317,7 @@ PrintActionsLog *PrintActionsLog::clone() const
 
 const string PrintActionsLog::toString() const
 {
-    return "PrintActionsLog " +  actionStatusToString[getStatus()];
+    return "PrintActionsLog " + actionStatusToString[getStatus()];
 }
 
 // PrintActionsLog end ------------------------------------
