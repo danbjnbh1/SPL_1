@@ -1,5 +1,9 @@
 valgrind --leak-check=full --show-reachable=yes bin/simulation config_file.txt
 
+planStatus 0 
+changePlanPolicy bal 
+planStatus 0 
+didnt change the policy 
 cases to test:
 
     # AddPlan -  error if:
