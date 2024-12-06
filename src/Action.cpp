@@ -45,7 +45,7 @@ void BaseAction::error(string errorMsg)
 {
     status = ActionStatus::ERROR;
     this->errorMsg = errorMsg;
-    cout << errorMsg << endl;
+    cout << "Error: " + errorMsg << endl;
 }
 
 const string &BaseAction::getErrorMsg() const
