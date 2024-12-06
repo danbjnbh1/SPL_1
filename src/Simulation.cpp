@@ -171,64 +171,72 @@ void Simulation::initSimulation(const string &configFilePath)
 
 void Simulation::start()
 {
+
     open();
     while (isRunning)
     {
-        cout << "\n";
-        string userInput;
-        getline(cin, userInput);
-        vector<string> parsedAction = Auxiliary::parseArguments(userInput);
-        ActionType actionType = getActionType(parsedAction[0]);
-        BaseAction *action;
-
-        switch (actionType)
+        try
         {
-        case ActionType::STEP:
-            action = new SimulateStep(stoi(parsedAction[1]));
-            break;
+            cout << "\n";
+            string userInput;
+            getline(cin, userInput);
+            vector<string> parsedAction = Auxiliary::parseArguments(userInput);
+            ActionType actionType = getActionType(parsedAction[0]);
+            BaseAction *action;
 
-        case ActionType::PLAN:
-            action = new AddPlan(parsedAction[1], parsedAction[2]);
-            break;
+            switch (actionType)
+            {
+            case ActionType::STEP:
+                action = new SimulateStep(stoi(parsedAction[1]));
+                break;
 
-        case ActionType::FACILITY:
-            action = new AddFacility(parsedAction[1], static_cast<FacilityCategory>(stoi(parsedAction[2])), stoi(parsedAction[3]), stoi(parsedAction[4]), stoi(parsedAction[5]), stoi(parsedAction[6]));
-            break;
+            case ActionType::PLAN:
+                action = new AddPlan(parsedAction[1], parsedAction[2]);
+                break;
 
-        case ActionType::SETTLEMENT:
-            action = new AddSettlement(parsedAction[1], static_cast<SettlementType>(stoi(parsedAction[2])));
-            break;
+            case ActionType::FACILITY:
+                action = new AddFacility(parsedAction[1], static_cast<FacilityCategory>(stoi(parsedAction[2])), stoi(parsedAction[3]), stoi(parsedAction[4]), stoi(parsedAction[5]), stoi(parsedAction[6]));
+                break;
 
-        case ActionType::CHANGE_POLICY:
-            action = new ChangePlanPolicy(stoi(parsedAction[1]), parsedAction[2]);
-            break;
+            case ActionType::SETTLEMENT:
+                action = new AddSettlement(parsedAction[1], static_cast<SettlementType>(stoi(parsedAction[2])));
+                break;
 
-        case ActionType::PLAN_STATUS:
-            action = new PrintPlanStatus(stoi(parsedAction[1]));
-            break;
+            case ActionType::CHANGE_POLICY:
+                action = new ChangePlanPolicy(stoi(parsedAction[1]), parsedAction[2]);
+                break;
 
-        case ActionType::LOG:
-            action = new PrintActionsLog();
-            break;
+            case ActionType::PLAN_STATUS:
+                action = new PrintPlanStatus(stoi(parsedAction[1]));
+                break;
 
-        case ActionType::BACKUP:
-            action = new BackupSimulation();
-            break;
+            case ActionType::LOG:
+                action = new PrintActionsLog();
+                break;
 
-        case ActionType::RESTORE:
-            action = new RestoreSimulation();
-            break;
+            case ActionType::BACKUP:
+                action = new BackupSimulation();
+                break;
 
-        case ActionType::CLOSE:
-            action = new Close();
-            break;
+            case ActionType::RESTORE:
+                action = new RestoreSimulation();
+                break;
 
-        default:
-            break;
+            case ActionType::CLOSE:
+                action = new Close();
+                break;
+
+            default:
+                break;
+            }
+
+            action->act(*this);
+            addAction(action);
         }
-
-        action->act(*this);
-        addAction(action);
+        catch (const std::exception &e)
+        {
+            cout << e.what() << endl;
+        }
     }
 }
 
