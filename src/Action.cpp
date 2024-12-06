@@ -68,7 +68,7 @@ void SimulateStep::act(Simulation &simulation)
 
 const string SimulateStep::toString() const
 {
-    return "SimulationStep " + to_string(numOfSteps) + actionStatusToString[getStatus()];
+    return "SimulationStep " + to_string(numOfSteps) + " " + actionStatusToString[getStatus()];
 }
 
 SimulateStep *SimulateStep::clone() const
@@ -100,11 +100,11 @@ const string AddFacility::toString() const
 {
     return "AddFacility " +
            facilityName +
-           facilityCategoryToString[facilityCategory] +
-           to_string(price) +
-           to_string(lifeQualityScore) +
-           to_string(economyScore) +
-           to_string(environmentScore) +
+           facilityCategoryToString[facilityCategory] + " " +
+           to_string(price) + " " +
+           to_string(lifeQualityScore) + " " +
+           to_string(economyScore) + " " +
+           to_string(environmentScore) + " " +
            actionStatusToString[getStatus()];
 }
 
@@ -140,8 +140,8 @@ void AddPlan::act(Simulation &simulation)
 const string AddPlan::toString() const
 {
     return "AddPlan " +
-           settlementName +
-           selectionPolicy +
+           settlementName + " " +
+           selectionPolicy + " " +
            actionStatusToString[getStatus()];
 }
 
@@ -201,7 +201,7 @@ RestoreSimulation *RestoreSimulation::clone() const
 AddSettlement::AddSettlement(const string &settlementName, SettlementType settlementType) : settlementName(settlementName), settlementType(settlementType) {};
 const string AddSettlement::toString() const
 {
-    return "AddSettlement " + settlementName + to_string(static_cast<int>(settlementType)) + actionStatusToString[getStatus()];
+    return "AddSettlement " + settlementName + " " + to_string(static_cast<int>(settlementType)) + " " + actionStatusToString[getStatus()];
 };
 
 void AddSettlement::act(Simulation &simulation)
@@ -257,7 +257,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
 
 const string ChangePlanPolicy::toString() const
 {
-    return "ChangePlanPolicy " + to_string(planId) + newPolicy + actionStatusToString[getStatus()];
+    return "ChangePlanPolicy " + to_string(planId) + " " +  newPolicy + " " + actionStatusToString[getStatus()];
 }
 
 ChangePlanPolicy *ChangePlanPolicy::clone() const
@@ -288,10 +288,9 @@ PrintPlanStatus *PrintPlanStatus::clone() const
     return new PrintPlanStatus(*this);
 }
 
-
 const string PrintPlanStatus::toString() const
 {
-    return "PrintPlanStatus " + to_string(planId) + actionStatusToString[getStatus()];
+    return "PrintPlanStatus " + to_string(planId) + " " + actionStatusToString[getStatus()];
 }
 
 // PrintPlanStatus end --------------------------------------
@@ -303,7 +302,8 @@ PrintActionsLog::PrintActionsLog() {};
 void PrintActionsLog::act(Simulation &simulation)
 {
     vector<BaseAction *> logs = simulation.getActionsLog();
-    for (const auto &log : logs) {
+    for (const auto &log : logs)
+    {
         cout << log->toString() << endl;
     }
     complete();
@@ -316,7 +316,7 @@ PrintActionsLog *PrintActionsLog::clone() const
 
 const string PrintActionsLog::toString() const
 {
-    return "PrintActionsLog " + actionStatusToString[getStatus()];
+    return "PrintActionsLog " +  actionStatusToString[getStatus()];
 }
 
 // PrintActionsLog end ------------------------------------
