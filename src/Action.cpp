@@ -229,6 +229,7 @@ ChangePlanPolicy::ChangePlanPolicy(const int planId, const string &newPolicy) : 
 
 void ChangePlanPolicy::act(Simulation &simulation)
 {
+    
     if (!simulation.isPlanExists(planId))
     {
         error("Cannot change selection policy");

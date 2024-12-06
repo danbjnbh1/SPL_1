@@ -15,10 +15,11 @@ const FacilityType &EconomySelection ::selectFacility(const vector<FacilityType>
 {
     int size = facilitiesOptions.size();
 
-    for (int i = lastSelectedIndex + 1; i < size; i = (i + 1) % size)
+    for (int i = (lastSelectedIndex) % size; i < size; i = (i + 1) % size)
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ECONOMY)
         {
+            lastSelectedIndex = i;
             return facilitiesOptions[i];
         }
     }
@@ -44,10 +45,11 @@ const FacilityType &SustainabilitySelection ::selectFacility(const vector<Facili
 {
     int size = facilitiesOptions.size();
 
-    for (int i = lastSelectedIndex + 1; i < size; i = (i + 1) % size)
+    for (int i = (lastSelectedIndex + 1) % size; i < size; i = (i + 1) % size)
     {
         if (facilitiesOptions[i].getCategory() == FacilityCategory::ENVIRONMENT)
         {
+            lastSelectedIndex = i; 
             return facilitiesOptions[i];
         }
     }
