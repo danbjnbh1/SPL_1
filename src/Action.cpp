@@ -244,7 +244,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
     }
 
     SelectionPolicy *newSelectionPolicy;
-    newSelectionPolicy = new BalancedSelection(plan.getlifeQualityScore(), plan.getEconomyScore(), plan.getEnvironmentScore());
+    newSelectionPolicy = createPolicyByName(newPolicy, plan.getlifeQualityScore(), plan.getEconomyScore(), plan.getEnvironmentScore());
 
     if (newSelectionPolicy == nullptr)
     {
@@ -253,6 +253,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
     }
 
     plan.setSelectionPolicy(newSelectionPolicy);
+    complete();
 }
 
 const string ChangePlanPolicy::toString() const
