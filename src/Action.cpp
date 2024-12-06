@@ -177,11 +177,15 @@ BackupSimulation *BackupSimulation::clone() const
 // BackupSimulation start --------------------------------------
 RestoreSimulation::RestoreSimulation()
 {
-    // Implementation
 }
 
 void RestoreSimulation::act(Simulation &simulation)
 {
+    if (backup == nullptr)
+    {
+        error("No backup available");
+        return;
+    }
     simulation = *backup;
     complete();
 }
@@ -229,7 +233,7 @@ ChangePlanPolicy::ChangePlanPolicy(const int planId, const string &newPolicy) : 
 
 void ChangePlanPolicy::act(Simulation &simulation)
 {
-    
+
     if (!simulation.isPlanExists(planId))
     {
         error("Cannot change selection policy");
