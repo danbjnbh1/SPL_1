@@ -68,7 +68,7 @@ void SimulateStep::act(Simulation &simulation)
 
 const string SimulateStep::toString() const
 {
-    return "step" + to_string(numOfSteps) + actionStatusToString[getStatus()];
+    return "SimulationStep " + to_string(numOfSteps) + actionStatusToString[getStatus()];
 }
 
 SimulateStep *SimulateStep::clone() const
@@ -98,7 +98,7 @@ void AddFacility::act(Simulation &simulation)
 
 const string AddFacility::toString() const
 {
-    return "facility" +
+    return "AddFacility " +
            facilityName +
            facilityCategoryToString[facilityCategory] +
            to_string(price) +
@@ -139,7 +139,7 @@ void AddPlan::act(Simulation &simulation)
 
 const string AddPlan::toString() const
 {
-    return "plan" +
+    return "AddPlan " +
            settlementName +
            selectionPolicy +
            actionStatusToString[getStatus()];
@@ -165,7 +165,7 @@ void BackupSimulation::act(Simulation &simulation)
 
 const string BackupSimulation::toString() const
 {
-    return "backup" + actionStatusToString[getStatus()];
+    return "backup " + actionStatusToString[getStatus()];
 }
 
 BackupSimulation *BackupSimulation::clone() const
@@ -188,7 +188,7 @@ void RestoreSimulation::act(Simulation &simulation)
 
 const string RestoreSimulation::toString() const
 {
-    return "restore" + actionStatusToString[getStatus()];
+    return "restore " + actionStatusToString[getStatus()];
 }
 
 RestoreSimulation *RestoreSimulation::clone() const
@@ -201,7 +201,7 @@ RestoreSimulation *RestoreSimulation::clone() const
 AddSettlement::AddSettlement(const string &settlementName, SettlementType settlementType) : settlementName(settlementName), settlementType(settlementType) {};
 const string AddSettlement::toString() const
 {
-    return "Add Settlement" + settlementName + to_string(static_cast<int>(settlementType)) + actionStatusToString[getStatus()];
+    return "AddSettlement " + settlementName + to_string(static_cast<int>(settlementType)) + actionStatusToString[getStatus()];
 };
 
 void AddSettlement::act(Simulation &simulation)
@@ -257,7 +257,7 @@ void ChangePlanPolicy::act(Simulation &simulation)
 
 const string ChangePlanPolicy::toString() const
 {
-    return "Change Policy" + to_string(planId) + newPolicy + actionStatusToString[getStatus()];
+    return "ChangePlanPolicy " + to_string(planId) + newPolicy + actionStatusToString[getStatus()];
 }
 
 ChangePlanPolicy *ChangePlanPolicy::clone() const
@@ -291,7 +291,7 @@ PrintPlanStatus *PrintPlanStatus::clone() const
 
 const string PrintPlanStatus::toString() const
 {
-    return "planStatus" + to_string(planId) + actionStatusToString[getStatus()];
+    return "PrintPlanStatus " + to_string(planId) + actionStatusToString[getStatus()];
 }
 
 // PrintPlanStatus end --------------------------------------
@@ -316,7 +316,7 @@ PrintActionsLog *PrintActionsLog::clone() const
 
 const string PrintActionsLog::toString() const
 {
-    return "Print Action Logs " + actionStatusToString[getStatus()];
+    return "PrintActionsLog " + actionStatusToString[getStatus()];
 }
 
 // PrintActionsLog end ------------------------------------
