@@ -303,7 +303,7 @@ void PrintActionsLog::act(Simulation &simulation)
 {
     vector<BaseAction *> logs = simulation.getActionsLog();
     for (const auto &log : logs) {
-        log->toString();
+        cout << log->toString() << endl;
     }
 }
 
@@ -341,6 +341,6 @@ Close *Close::clone() const
 const string Close::toString() const
 {
 
-    return "Close " + actionStatusToString[getStatus()];
+    return "close " + actionStatusToString[getStatus()];
 }
 // Close end -----------------------------------------------
