@@ -31,8 +31,8 @@ Plan::Plan(const Plan &other)
       settlement(other.settlement),
       selectionPolicy(),
       status(other.status),
-      facilities(),        // Default-initialize the vector
-      underConstruction(), // Default-initialize the vector
+      facilities(),
+      underConstruction(),
       facilityOptions(other.facilityOptions),
       life_quality_score(other.life_quality_score),
       economy_score(other.economy_score),
@@ -78,10 +78,10 @@ Plan::Plan(const Plan &other, Settlement &settlement)
     }
 }
 
-// distractor
+// destructor
 Plan::~Plan()
 {
-    delete selectionPolicy; // Free the dynamically allocated SelectionPolicy.
+    delete selectionPolicy;
 
     for (Facility *facility : facilities)
     {
@@ -213,7 +213,6 @@ void Plan::step()
     {
         Facility *facility = *iter;
 
-        // Advance the facility's construction status
         FacilityStatus status = facility->step();
 
         // If the facility is now operational, move it to the facilities list
@@ -222,8 +221,8 @@ void Plan::step()
             life_quality_score += facility->getLifeQualityScore();
             economy_score += facility->getEconomyScore();
             environment_score += facility->getEnvironmentScore();
-            facilities.push_back(facility);       // Add to operational facilities
-            iter = underConstruction.erase(iter); // Remove from underConstruction list
+            facilities.push_back(facility);
+            iter = underConstruction.erase(iter);
         }
         else
         {

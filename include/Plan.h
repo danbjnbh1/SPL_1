@@ -11,7 +11,7 @@ enum class PlanStatus
     AVALIABLE,
     BUSY,
 };
-extern map<PlanStatus, string> planStatusToString; // it did problem of override in the Plan.cpp now all compile without that 
+extern map<PlanStatus, string> planStatusToString;
 
 class Plan
 {

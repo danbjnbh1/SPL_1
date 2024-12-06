@@ -335,7 +335,7 @@ void Close::act(Simulation &simulation)
     vector<Plan> plans = simulation.getPlans();
     for (const Plan &plan : plans)
     {
-        cout << plan.finalStatus() << endl;
+        cout << plan.finalStatus() + "\n" << endl;
     }
     simulation.close();
     complete();

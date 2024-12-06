@@ -27,7 +27,6 @@ ActionType getActionType(string &actionTypeStr);
 
 extern map<ActionStatus, string> actionStatusToString;
 
-//! Dan
 class BaseAction{
     public:
         BaseAction();
@@ -47,7 +46,6 @@ class BaseAction{
         ActionStatus status;
 };
 
-//!Dan
 class SimulateStep : public BaseAction {
 
     public:
@@ -59,7 +57,6 @@ class SimulateStep : public BaseAction {
         const int numOfSteps;
 };
 
-//!Dan
 class AddPlan : public BaseAction {
     public:
         AddPlan(const string &settlementName, const string &selectionPolicy);
@@ -71,7 +68,6 @@ class AddPlan : public BaseAction {
         const string selectionPolicy;
 };
 
-//!Dan
 class AddSettlement : public BaseAction {
     public:
         AddSettlement(const string &settlementName,SettlementType settlementType);
@@ -83,8 +79,6 @@ class AddSettlement : public BaseAction {
         const SettlementType settlementType;
 };
 
-
-//!Dan
 class AddFacility : public BaseAction {
     public:
         AddFacility(const string &facilityName, const FacilityCategory facilityCategory, const int price, const int lifeQualityScore, const int economyScore, const int environmentScore);
@@ -101,7 +95,6 @@ class AddFacility : public BaseAction {
 
 };
 
-//!Or
 class PrintPlanStatus: public BaseAction {
     public:
         PrintPlanStatus(int planId);
@@ -112,7 +105,6 @@ class PrintPlanStatus: public BaseAction {
         const int planId;
 };
 
-//!Dan
 class ChangePlanPolicy : public BaseAction {
     public:
         ChangePlanPolicy(const int planId, const string &newPolicy);
@@ -124,7 +116,6 @@ class ChangePlanPolicy : public BaseAction {
         const string newPolicy;
 };
 
-//!Or
 class PrintActionsLog : public BaseAction {
     public:
         PrintActionsLog();
@@ -134,7 +125,6 @@ class PrintActionsLog : public BaseAction {
     private:
 };
 
-//!Or
 class Close : public BaseAction {
     public:
         Close();
@@ -144,7 +134,6 @@ class Close : public BaseAction {
     private:
 };
 
-//!Dan
 class BackupSimulation : public BaseAction {
     public:
         BackupSimulation();
@@ -154,7 +143,6 @@ class BackupSimulation : public BaseAction {
     private:
 };
 
-//!Dan
 class RestoreSimulation : public BaseAction {
     public:
         RestoreSimulation();

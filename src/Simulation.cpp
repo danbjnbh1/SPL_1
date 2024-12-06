@@ -66,7 +66,7 @@ Simulation::~Simulation()
         delete sett;
     }
 }
-// assignment operator אולי רק צריך מחיקה
+// assignment operator
 const Simulation &Simulation::operator=(const Simulation &other)
 {
     if (this == &other)
@@ -103,7 +103,7 @@ const Simulation &Simulation::operator=(const Simulation &other)
 
     return *this;
 }
-// move assignment operator אולי רק צריך מחיקה
+// move assignment operator
 const Simulation &Simulation::operator=(Simulation &&other)
 {
     if (this == &other)
@@ -253,7 +253,7 @@ void Simulation::addAction(BaseAction *action)
 
 bool Simulation::addSettlement(Settlement *settlement)
 {
-    if (isSettlementExists(settlement->getName())) //? check if this to handle error here or inside the action
+    if (isSettlementExists(settlement->getName()))
     {
         return false;
     }
@@ -305,7 +305,6 @@ Settlement &Simulation::getSettlement(const string &settlementName)
         }
     }
 
-    // If no settlement matches, throw an exception
     throw std::runtime_error("Settlement with name '" + settlementName + "' not found");
 }
 

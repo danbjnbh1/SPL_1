@@ -67,4 +67,4 @@ private:
     int lastSelectedIndex;
 };
 
-SelectionPolicy *createPolicyByName(string policyName, int lifeQualityScore = 0, int economyScore = 0, int environmentScore = 0);
+SelectionPolicy *createPolicyByName(const string &policyName, int lifeQualityScore = 0, int economyScore = 0, int environmentScore = 0);

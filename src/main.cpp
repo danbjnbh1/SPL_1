@@ -1,7 +1,5 @@
 #include "Simulation.h"
 #include <iostream>
-#include <Facility.h>
-#include <Settlement.h>
 
 using namespace std;
 

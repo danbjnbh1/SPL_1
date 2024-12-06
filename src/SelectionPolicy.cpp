@@ -140,7 +140,7 @@ BalancedSelection *BalancedSelection::clone() const
     return new BalancedSelection(*this);
 }
 
-SelectionPolicy *createPolicyByName(string policyName,
+SelectionPolicy *createPolicyByName(const string &policyName,
                                     int lifeQualityScore,
                                     int economyScore,
                                     int environmentScore)
