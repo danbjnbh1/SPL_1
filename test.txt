@@ -1,21 +1,21 @@
 valgrind --leak-check=full --show-reachable=yes bin/simulation config_file.txt
 
 
-    # AddPlan -  error if:
+ V  # AddPlan -  error if:
          settlement doesnt exists
          selection policy doesnt exists
 
-    # AddFacility - error if:
+V  # AddFacility - error if:
         facility already exists
 
-    # PrintPlanStatus - error if:
+V   # PrintPlanStatus - error if:
         plan id doest exists
 
 V   # ChangePlanPolicy - error if:
         the previous policy is the same as the desired one
         the planID doesn’t exist
 
-    # PrintActionsLog - doest print the current 'log' action
+V   # PrintActionsLog - doest print the current 'log' action
 
-    # RestoreSimulation -  "No backup available" if not backup
+V   # RestoreSimulation -  "No backup available" if not backup
     

@@ -9,35 +9,34 @@ using namespace std;
 
 map<PlanStatus, string> planStatusToString = {{PlanStatus::AVALIABLE, "AVALIABLE"}, {PlanStatus::BUSY, "BUSY"}};
 
-
 Plan::Plan(
     const int planId,
     const Settlement &settlement,
     SelectionPolicy *selectionPolicy,
-    const vector<FacilityType> &facilityOptions) 
+    const vector<FacilityType> &facilityOptions)
     : plan_id(planId),
       settlement(settlement),
       selectionPolicy(selectionPolicy),
-      status(PlanStatus::AVALIABLE), 
-      facilities(),  
-      underConstruction(),  
-      facilityOptions(facilityOptions),  
-      life_quality_score(0),  
-      economy_score(0),  
-      environment_score(0){}; 
-      
-//copy Constructor
+      status(PlanStatus::AVALIABLE),
+      facilities(),
+      underConstruction(),
+      facilityOptions(facilityOptions),
+      life_quality_score(0),
+      economy_score(0),
+      environment_score(0) {};
+
+// copy Constructor
 Plan::Plan(const Plan &other)
     : plan_id(other.plan_id),
-      settlement(other.settlement),  
-      selectionPolicy(),  
-      status(other.status), 
-      facilities(),  // Default-initialize the vector
-      underConstruction(),  // Default-initialize the vector
-      facilityOptions(other.facilityOptions),  
-      life_quality_score(other.life_quality_score),  
-      economy_score(other.economy_score),  
-      environment_score(other.environment_score) 
+      settlement(other.settlement),
+      selectionPolicy(),
+      status(other.status),
+      facilities(),        // Default-initialize the vector
+      underConstruction(), // Default-initialize the vector
+      facilityOptions(other.facilityOptions),
+      life_quality_score(other.life_quality_score),
+      economy_score(other.economy_score),
+      environment_score(other.environment_score)
 {
     selectionPolicy = other.selectionPolicy->clone();
     // Deep copy of facilities
@@ -53,19 +52,18 @@ Plan::Plan(const Plan &other)
     }
 }
 
-
-//copy Constructor with settlement reference
-Plan::Plan(const Plan &other, Settlement& settlement)
+// copy Constructor with settlement reference
+Plan::Plan(const Plan &other, Settlement &settlement)
     : plan_id(other.plan_id),
-      settlement(settlement),  
-      selectionPolicy(),  
-      status(other.status), 
+      settlement(settlement),
+      selectionPolicy(),
+      status(other.status),
       facilities(),
       underConstruction(),
-      facilityOptions(other.facilityOptions),  
-      life_quality_score(other.life_quality_score),  
-      economy_score(other.economy_score),  
-      environment_score(other.environment_score) 
+      facilityOptions(other.facilityOptions),
+      life_quality_score(other.life_quality_score),
+      economy_score(other.economy_score),
+      environment_score(other.environment_score)
 {
     selectionPolicy = other.selectionPolicy->clone();
 
@@ -80,7 +78,7 @@ Plan::Plan(const Plan &other, Settlement& settlement)
     }
 }
 
-//distractor 
+// distractor
 Plan::~Plan()
 {
     delete selectionPolicy; // Free the dynamically allocated SelectionPolicy.
@@ -93,11 +91,10 @@ Plan::~Plan()
     {
         delete facility;
     }
-    
 }
 
-//Move Operator
-Plan::Plan(Plan &&other) 
+// Move Operator
+Plan::Plan(Plan &&other)
     : plan_id(other.plan_id),
       settlement(other.settlement),
       selectionPolicy(other.selectionPolicy),
@@ -107,7 +104,8 @@ Plan::Plan(Plan &&other)
       facilityOptions(other.facilityOptions),
       life_quality_score(other.life_quality_score),
       economy_score(other.economy_score),
-      environment_score(other.environment_score) {
+      environment_score(other.environment_score)
+{
     other.selectionPolicy = nullptr;
 }
 
@@ -169,6 +167,15 @@ const string Plan::toString() const
            "EnvironmentScore: " + to_string(environment_score);
 }
 
+const string Plan::finalStatus() const
+{
+    return "PlanID: " + to_string(plan_id) + "\n" +
+           "SettlementName: " + getSettlement().getName() + "\n" +
+           "LifeQualityScore: " + to_string(life_quality_score) + "\n" +
+           "EconomyScore: " + to_string(economy_score) + "\n" +
+           "EnvironmentScore: " + to_string(environment_score);
+}
+
 const Settlement Plan::getSettlement() const
 {
     return this->settlement;
@@ -212,9 +219,9 @@ void Plan::step()
         // If the facility is now operational, move it to the facilities list
         if (status == FacilityStatus::OPERATIONAL)
         {
-            life_quality_score+=facility->getLifeQualityScore();
-            economy_score+=facility->getEconomyScore();
-            environment_score+=facility->getEnvironmentScore();
+            life_quality_score += facility->getLifeQualityScore();
+            economy_score += facility->getEconomyScore();
+            environment_score += facility->getEnvironmentScore();
             facilities.push_back(facility);       // Add to operational facilities
             iter = underConstruction.erase(iter); // Remove from underConstruction list
         }
@@ -230,7 +237,13 @@ void Plan::step()
 void Plan::updateStatus()
 {
     const size_t maxUnderConstruction = static_cast<size_t>(settlement.getType()) + 1;
-    if (underConstruction.size() >= maxUnderConstruction)
+    if (underConstruction.size() > maxUnderConstruction)
+    {
+        cout << "ERROR" << endl;
+        cout << "maxUnderConstruction: " << maxUnderConstruction << endl;
+        cout << "underConstruction.size(): " << underConstruction.size() << endl;
+    }
+    if (underConstruction.size() == maxUnderConstruction)
     {
         status = PlanStatus::BUSY;
     }

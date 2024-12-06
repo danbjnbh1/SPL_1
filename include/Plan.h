@@ -34,11 +34,9 @@ public:
     const vector<Facility *> &getUnderConstruction() const;
     void addFacility(Facility *facility);
     const string toString() const;
-    const string toStringFinish() const;
+    const string finalStatus() const;
     const SelectionPolicy& getSelectionPolicy() const;
     const int getID() const;
-    const string printFacilities() const;
-    const string printunfinishedFacilities() const;
     const Settlement getSettlement() const;
     void updateStatus();
 
