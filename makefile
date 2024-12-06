@@ -1,4 +1,4 @@
-all: clean link run
+all: clean link
 
 link: compile
 	@echo 'Linking'
