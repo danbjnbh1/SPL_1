@@ -280,6 +280,7 @@ void PrintPlanStatus::act(Simulation &simulation)
 
     Plan planToPrint = simulation.getPlan(this->planId);
     planToPrint.printStatus();
+    complete();
 }
 
 PrintPlanStatus *PrintPlanStatus::clone() const
@@ -305,6 +306,7 @@ void PrintActionsLog::act(Simulation &simulation)
     for (const auto &log : logs) {
         cout << log->toString() << endl;
     }
+    complete();
 }
 
 PrintActionsLog *PrintActionsLog::clone() const
@@ -331,6 +333,7 @@ void Close::act(Simulation &simulation)
         cout << plan.toString() << endl;
     }
     simulation.close();
+    complete();
 }
 
 Close *Close::clone() const
