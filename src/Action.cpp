@@ -280,6 +280,7 @@ void PrintPlanStatus::act(Simulation &simulation)
 
     Plan planToPrint = simulation.getPlan(this->planId);
     planToPrint.printStatus();
+    complete();
 }
 
 PrintPlanStatus *PrintPlanStatus::clone() const
