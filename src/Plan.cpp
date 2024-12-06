@@ -237,12 +237,7 @@ void Plan::step()
 void Plan::updateStatus()
 {
     const size_t maxUnderConstruction = static_cast<size_t>(settlement.getType()) + 1;
-    if (underConstruction.size() > maxUnderConstruction)
-    {
-        cout << "ERROR" << endl;
-        cout << "maxUnderConstruction: " << maxUnderConstruction << endl;
-        cout << "underConstruction.size(): " << underConstruction.size() << endl;
-    }
+
     if (underConstruction.size() == maxUnderConstruction)
     {
         status = PlanStatus::BUSY;

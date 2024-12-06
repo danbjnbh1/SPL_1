@@ -45,7 +45,7 @@ const FacilityType &SustainabilitySelection ::selectFacility(const vector<Facili
 {
     int size = facilitiesOptions.size();
 
-    while(true)
+    while (true)
     {
         lastSelectedIndex = (lastSelectedIndex + 1) % size;
         if (facilitiesOptions[lastSelectedIndex].getCategory() == FacilityCategory::ENVIRONMENT)
@@ -84,9 +84,7 @@ const string NaiveSelection::toString() const
 
 NaiveSelection *NaiveSelection::clone() const
 {
-    NaiveSelection *clonedObject = new NaiveSelection();
-    clonedObject->lastSelectedIndex = this->lastSelectedIndex;
-    return clonedObject;
+    return new NaiveSelection(*this);
 }
 
 BalancedSelection::BalancedSelection() : LifeQualityScore(0), EconomyScore(0), EnvironmentScore(0) {}
@@ -139,9 +137,7 @@ const string BalancedSelection::toString() const
 
 BalancedSelection *BalancedSelection::clone() const
 {
-    return new BalancedSelection(LifeQualityScore,
-                                 EconomyScore,
-                                 EnvironmentScore);
+    return new BalancedSelection(*this);
 }
 
 SelectionPolicy *createPolicyByName(string policyName,

@@ -3,7 +3,6 @@
 #include "Facility.h"
 using std::vector;
 
-// Add implementation for edge cases - no facility match the policy
 class SelectionPolicy
 {
 public:
