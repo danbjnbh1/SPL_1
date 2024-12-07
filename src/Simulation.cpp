@@ -88,7 +88,6 @@ const Simulation &Simulation::operator=(const Simulation &other)
 
     isRunning = other.isRunning;
     planCounter = other.planCounter;
-    plans = vector<Plan>(other.plans);
     facilitiesOptions = vector<FacilityType>(other.facilitiesOptions);
 
     for (BaseAction *action : other.actionsLog)
@@ -99,6 +98,13 @@ const Simulation &Simulation::operator=(const Simulation &other)
     for (Settlement *sett : other.settlements)
     {
         settlements.push_back(new Settlement(*sett));
+    }
+
+    for (const Plan &plan : other.plans)
+    {
+        // Find the corresponding copied settlement
+        Settlement &copiedSettlement = getSettlement(plan.getSettlement().getName());
+        plans.push_back(Plan(plan, copiedSettlement));
     }
 
     return *this;
