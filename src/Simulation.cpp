@@ -100,6 +100,7 @@ const Simulation &Simulation::operator=(const Simulation &other)
         settlements.push_back(new Settlement(*sett));
     }
 
+    plans.clear();
     for (const Plan &plan : other.plans)
     {
         // Find the corresponding copied settlement
